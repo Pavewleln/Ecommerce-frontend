@@ -1,4 +1,4 @@
-import {Controller} from "react-hook-form-components";
+import {Controller} from "react-hook-form";
 import {FC, useState} from "react";
 
 interface TextFieldInt {

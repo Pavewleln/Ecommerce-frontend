@@ -1,10 +1,11 @@
-import {Home} from "@/components/views/Home";
 import {MainLayout} from "@/components/layouts/MainLayout";
 
 const HomePage = () => {
     return (
         <MainLayout title={"Главная"}>
-            <Home/>
+            <div>
+                Home
+            </div>
         </MainLayout>
     )
 }

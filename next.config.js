@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   env: {
-    SERVER_URL: 'localhost'
+    SERVER_URL: 'http://localhost:4000/'
   }
 }
 
