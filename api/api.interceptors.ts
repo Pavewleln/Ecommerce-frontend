@@ -21,7 +21,7 @@ instance.interceptors.response.use(
         const originalRequest = error.config
         if (
             (error?.response?.status === 401 ||
-                errorCatch(error) === 'jwt expired' ||
+                errorCatch(error) === 'вы не авторизованы' ||
                 errorCatch(error) === 'jwt must be provided') &&
             error.config &&
             !error.config._isRetry
@@ -31,7 +31,7 @@ instance.interceptors.response.use(
             try {
                 return instance.request(originalRequest)
             } catch (err) {
-                if (errorCatch(err) === 'jwt expired') {
+                if (errorCatch(err) === 'вы не авторизованы') {
 
                 }
             }

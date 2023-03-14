@@ -1,15 +1,15 @@
-import {AuthLayout} from "@/components/layouts/AuthLayout";
+import {emailValidation, nameValidation, passwordValidation, surnameValidation} from "@/utils/validation";
 import {ButtonForm} from "@/components/ui/form-components/ButtonForm";
+import {SubmitHandler, useForm, useFormState} from "react-hook-form";
 import {TextField} from "@/components/ui/form-components/TextField";
 import {ISignUpResponse} from "@/store/user/user.interface";
-import Link from "next/link";
-import {SubmitHandler, useForm, useFormState} from "react-hook-form";
-import {NextPage} from "next";
+import {AuthLayout} from "@/components/layouts/AuthLayout";
+import {useAuthRedirect} from "@/hooks/useAuthRedirect";
 import {useActions} from "@/hooks/useActions";
-import {emailValidation, nameValidation, passwordValidation, surnameValidation} from "@/utils/validation";
 import {useAuth} from "@/hooks/useAuth";
-import {useAuthRedirect} from "@/hooks/useAuth.redirect";
 import {toast} from "react-toastify";
+import {NextPage} from "next";
+import Link from "next/link";
 
 const SignUp: NextPage = () => {
     useAuthRedirect()
@@ -33,7 +33,8 @@ const SignUp: NextPage = () => {
             name: '',
             surname: '',
             email: '',
-            password: ''
+            password: '',
+            phone: ''
         },
         mode: "onChange"
     });
@@ -62,79 +63,82 @@ const SignUp: NextPage = () => {
     const onSubmit: SubmitHandler<ISignUpResponse> = async (registerData) => {
         try {
             await register(registerData)
+            toast.success("Вы успешно зарегистрировались")
         } catch (err) {
             toast.error('Ошибка. Попробуйте позже')
         }
     };
     return (
         <AuthLayout title={"Регистрация"}>
-            <section className="bg-gray-50 dark:bg-gray-900">
-                <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-                    <div
-                        className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-                        <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                                Зарегистрироваться
-                            </h1>
-                            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-6">
-                                {/*Имя*/}
-                                <TextField
-                                    name={"name"}
-                                    type={"text"}
-                                    control={control}
-                                    validation={nameValidation}
-                                    label={"Имя"}
-                                    placeholder={"Иван"}
-                                    error={errors.name}
-                                    id={"name"}
-                                />
-                                {/*Фамилия*/}
-                                <TextField
-                                    name={"surname"}
-                                    type={"text"}
-                                    control={control}
-                                    validation={surnameValidation}
-                                    label={"Фамилия"}
-                                    placeholder={"Иванов"}
-                                    error={errors.surname}
-                                    id={"surname"}
-                                />
-                                {/*Почта*/}
-                                <TextField
-                                    name={"email"}
-                                    type={"email"}
-                                    control={control}
-                                    validation={emailValidation}
-                                    label={"Почта"}
-                                    placeholder={"@"}
-                                    error={errors.email}
-                                    id={"email"}
-                                />
-                                {/*Пароль*/}
-                                <TextField
-                                    name={"password"}
-                                    type={"password"}
-                                    control={control}
-                                    validation={passwordValidation}
-                                    label={"Пароль"}
-                                    placeholder={"******"}
-                                    error={errors.password}
-                                    id={"password"}
-                                />
-                                <ButtonForm isLoading={isLoading} isValid={isValid}
-                                            label={"Зарегистрироваться"}/>
-                                <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                    Уже есть аккаунт?
-                                    <Link href={"auth/signIn"}
-                                          className="font-medium text-primary-600 hover:underline dark:text-primary-500">
-                                        Войти
-                                    </Link>
-                                </p>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                Зарегистрироваться
+            </h1>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-6">
+                {/*Имя*/}
+                <TextField
+                    name={"name"}
+                    type={"text"}
+                    control={control}
+                    validation={nameValidation}
+                    label={"Имя"}
+                    placeholder={"Иван"}
+                    error={errors.name}
+                    id={"name"}
+                />
+                {/*Фамилия*/}
+                <TextField
+                    name={"surname"}
+                    type={"text"}
+                    control={control}
+                    validation={surnameValidation}
+                    label={"Фамилия"}
+                    placeholder={"Иванов"}
+                    error={errors.surname}
+                    id={"surname"}
+                />
+                {/*Почта*/}
+                <TextField
+                    name={"email"}
+                    type={"email"}
+                    control={control}
+                    validation={emailValidation}
+                    label={"Почта"}
+                    placeholder={"@"}
+                    error={errors.email}
+                    id={"email"}
+                />
+                {/*Телефон*/}
+                <TextField
+                    name={"phone"}
+                    type={"phone"}
+                    control={control}
+                    validation={surnameValidation}
+                    label={"Телефон"}
+                    placeholder={"+7"}
+                    error={errors.phone}
+                    id={"phone"}
+                />
+                {/*Пароль*/}
+                <TextField
+                    name={"password"}
+                    type={"password"}
+                    control={control}
+                    validation={passwordValidation}
+                    label={"Пароль"}
+                    placeholder={"******"}
+                    error={errors.password}
+                    id={"password"}
+                />
+                <ButtonForm isLoading={isLoading} isValid={isValid}
+                            label={"Зарегистрироваться"}/>
+                <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                    Уже есть аккаунт?
+                    <Link href={"signIn"}
+                          className="font-medium text-primary-600 hover:underline dark:text-primary-500">
+                        Войти
+                    </Link>
+                </p>
+            </form>
         </AuthLayout>
     )
 }

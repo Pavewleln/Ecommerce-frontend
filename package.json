@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.11",
+    "@heroicons/react": "^2.0.16",
     "@reduxjs/toolkit": "^1.9.3",
     "@tanstack/react-query": "^4.26.1",
     "@types/node": "18.15.0",
@@ -19,6 +21,7 @@
     "eslint-config-next": "13.2.4",
     "js-cookie": "^3.0.1",
     "next": "13.2.4",
+    "next-themes": "^0.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.5",

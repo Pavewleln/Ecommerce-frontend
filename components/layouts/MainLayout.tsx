@@ -1,7 +1,7 @@
-import Head from "next/head";
+import { Header } from "../ui/Header";
 import {FC, ReactNode} from "react";
 import {Footer} from "../ui/Footer";
-import {Header} from "../ui/Header";
+import Head from "next/head";
 
 interface IMainLayout {
     children: ReactNode,
@@ -17,7 +17,7 @@ export const MainLayout: FC<IMainLayout> = ({children, title}) => {
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
             </Head>
             <Header/>
-            <main className={"h-screen"}>
+            <main className={"min-h-screen"}>
                 {children}
             </main>
             <Footer/>

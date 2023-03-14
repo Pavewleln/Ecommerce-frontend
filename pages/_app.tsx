@@ -1,9 +1,12 @@
-import '@/assets/styles/globals.css'
-import type {AppProps} from 'next/app'
-import AuthProvider from "@/providers/auth-provider/AuthProvider";
-import {store} from "@/store/store";
-import {Provider} from "react-redux";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import AuthProvider from "@/providers/auth-provider/AuthProvider";
+import "react-toastify/dist/ReactToastify.css";
+import {ToastContainer} from "react-toastify";
+import {ThemeProvider} from "next-themes";
+import type {AppProps} from 'next/app';
+import {Provider} from "react-redux";
+import '@/assets/styles/globals.css';
+import {store} from "@/store/store";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -17,9 +20,12 @@ export default function App({Component, pageProps}: AppProps) {
     return (
         <QueryClientProvider client={queryClient}>
             <Provider store={store}>
-                <AuthProvider>
-                    <Component {...pageProps} />
-                </AuthProvider>
+                <ThemeProvider>
+                    <AuthProvider>
+                        <Component {...pageProps} />
+                        <ToastContainer/>
+                    </AuthProvider>
+                </ThemeProvider>
             </Provider>
         </QueryClientProvider>
     )

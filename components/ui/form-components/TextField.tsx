@@ -51,7 +51,7 @@ export const TextField: FC<TextFieldInt> = ({
                         )}
                     />
                     {type === "password" &&
-                        <div className={"p-2 cursor-pointer"}>
+                        <div className={"p-2 cursor-pointer hover:bg-gray-100 transition-all rounded-3xl"}>
                             {showPassword
                                 ? <svg onClick={toggleShowPassword} xmlns="http://www.w3.org/2000/svg" fill="none"
                                        viewBox="0 0 24 24" strokeWidth="1.5"

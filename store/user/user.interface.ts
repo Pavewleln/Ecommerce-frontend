@@ -1,6 +1,6 @@
 // Что в себя включает пользователь
 export interface IUser {
-    id: string,
+    _id: string,
     email: string,
     name: string,
     surname: string,
@@ -19,7 +19,8 @@ export interface ISignUpResponse {
     name: string,
     surname: string,
     email: string,
-    password: string
+    password: string,
+    phone: string
 }
 
 // Виды токена
@@ -37,4 +38,8 @@ export interface IInitialState {
 // Запрос
 export interface IAuthResponse extends ITokens {
     user: IUser
+}
+export enum Tokens {
+    refreshToken = 'refresh-token',
+    accessToken = 'access-token'
 }
