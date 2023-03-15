@@ -14,7 +14,7 @@ export const MainLayout: FC<ILayout> = ({children, title}) => {
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
             </Head>
             <Header/>
-            <main className={"min-h-screen py-5 px-10"}>
+            <main className={"min-h-screen p-5"}>
                 {children}
             </main>
             <Footer/>

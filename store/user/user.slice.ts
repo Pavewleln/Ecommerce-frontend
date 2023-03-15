@@ -1,4 +1,4 @@
-import {checkAuth, login, logout, register} from "@/store/user/user.actions";
+import {checkAuth, login, logout, register, updateProfile} from "@/store/user/user.actions";
 import {IInitialState} from "@/store/user/user.interface";
 import {createSlice} from "@reduxjs/toolkit";
 
@@ -24,6 +24,17 @@ const UserSlice = createSlice({
             .addCase(register.rejected, state => {
                 state.isLoading = false
                 state.user = null
+            })
+            // Изменение профиля
+            .addCase(updateProfile.pending, state => {
+                state.isLoading = true
+            })
+            .addCase(updateProfile.fulfilled, (state, {payload}) => {
+                state.isLoading = false
+                state.user = payload.user
+            })
+            .addCase(updateProfile.rejected, state => {
+                state.isLoading = false
             })
             // Вход
             .addCase(login.pending, state => {

@@ -1,37 +1,41 @@
 import img from '../../../assets/images/image-1.jpg'
 import Image from "next/image";
+import {FC} from "react";
+import Link from "next/link";
 
-interface ICard {
+export interface ICard {
+    _id: string,
     title: string,
     price: number,
     kol: number,
-    description: string
+    description: string,
+    imageUrl: string,
+    type: string
 }
 
-export const Card = () => {
+export const Card: FC<ICard> = ({_id, kol, description, price, title, imageUrl, type}) => {
     return (
-
-        <div
-            className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-2">
-            <a href="#">
+        <div className="max-w-[16rem] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-2 hover:shadow-md transition-all">
+            <Link href={`/product/${_id}`}>
                 <Image className="rounded-t-lg" src={img} alt="Product"/>
-            </a>
-            <div className="p-5">
+            </Link>
+            <div className="p-3">
                 <a href="#">
-                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy
-                        technology acquisitions 2021</h5>
+                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{title}</h5>
                 </a>
-                <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise
-                    technology acquisitions of 2021 so far, in reverse chronological order.</p>
-                <div className="flex items-center justify-between">
-                    <span className="text-3xl font-bold text-gray-900 dark:text-white">$599</span>
-                    <button
-                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <div className="flex items-center justify-between mb-2">
+                    <span className="text-md font-bold text-gray-900 dark:text-white">${price}</span>
+                    <span className="text-md font-bold text-gray-900 dark:text-white">На складе: {kol}</span>
+                </div>
+                <div className="flex items-center justify-end">
+                    <button className="inline-flex items-center px-4 py-2 text-sm font-medium
+                 text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4
+                focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700
+                dark:focus:ring-blue-800">
                         В корзину
                     </button>
                 </div>
             </div>
         </div>
-
     )
 }

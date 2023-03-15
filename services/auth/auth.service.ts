@@ -1,4 +1,4 @@
-import {IAuthResponse, ISignInResponse, ISignUpResponse, Tokens} from "@/store/user/user.interface";
+import {IAuthResponse, ISignInResponse, ISignUpResponse, IUpdateResponse} from "@/store/user/user.interface";
 import {getRefreshToken, saveTokensStorage} from "@/services/auth/auth.helper";
 import {getContentType} from "@/api/api.helper";
 import {instance} from "@/api/api.interceptors";
@@ -19,6 +19,16 @@ export const AuthService = {
     async signUp(data: ISignUpResponse) {
         const response = await instance<IAuthResponse>({
             url: 'auth/register',
+            method: 'POST',
+            data
+        })
+        if (response.data.accessToken) saveTokensStorage(response.data)
+        return response.data
+    },
+    // Изменение профиля
+    async update(data: IUpdateResponse) {
+        const response = await instance<IAuthResponse>({
+            url: 'auth/update',
             method: 'POST',
             data
         })

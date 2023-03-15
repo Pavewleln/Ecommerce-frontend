@@ -23,9 +23,9 @@ const AuthProvider: FC<PropsWithChildren> = ({children}) => {
             router.push('/auth/signIn')
             toast.error("Нет доступа")
         }
-        else if(!refreshToken && pathname !== "/auth/signIn" && pathname !== "/auth/signUp") {
-            router.push('/auth/signIn')
-        }
+        // else if(!refreshToken && pathname !== "/auth/signIn" && pathname !== "/auth/signUp") {
+        //     router.push('/auth/signIn')
+        // }
     }, [pathname])
 
     return <>{children}</>

@@ -2,6 +2,7 @@ import {emailValidation, passwordValidation} from "@/utils/validation";
 import {ButtonForm} from "@/components/ui/Form-components/ButtonForm";
 import {SubmitHandler, useForm, useFormState} from "react-hook-form";
 import {TextField} from "@/components/ui/Form-components/TextField";
+import {CheckBox} from "@/components/ui/Form-components/CheckBox";
 import {ISignInResponse} from "@/store/user/user.interface";
 import {AuthLayout} from "@/components/layouts/AuthLayout";
 import {useAuthRedirect} from "@/hooks/useAuthRedirect";
@@ -10,7 +11,6 @@ import {useAuth} from "@/hooks/useAuth";
 import {toast} from "react-toastify";
 import {NextPage} from "next";
 import Link from "next/link";
-import {CheckBox} from "@/components/ui/Form-components/CheckBox";
 
 const SignIn: NextPage = () => {
     const {login} = useActions()
