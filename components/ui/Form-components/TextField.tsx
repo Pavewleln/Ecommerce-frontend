@@ -1,7 +1,7 @@
 import {Controller} from "react-hook-form";
 import {FC, useState} from "react";
 
-interface TextFieldInt {
+interface ITextField {
     id: string,
     control: any,
     label: string,
@@ -12,16 +12,17 @@ interface TextFieldInt {
     error: any
 }
 
-export const TextField: FC<TextFieldInt> = ({
-                                                id,
-                                                control,
-                                                label,
-                                                name,
-                                                type,
-                                                placeholder,
-                                                validation,
-                                                error
-                                            }: TextFieldInt) => {
+// Кастомный text
+export const TextField: FC<ITextField> = ({
+                                              id,
+                                              control,
+                                              label,
+                                              name,
+                                              type,
+                                              placeholder,
+                                              validation,
+                                              error
+                                          }) => {
 
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const toggleShowPassword = () => {
@@ -51,7 +52,7 @@ export const TextField: FC<TextFieldInt> = ({
                         )}
                     />
                     {type === "password" &&
-                        <div className={"p-2 cursor-pointer hover:bg-gray-100 transition-all rounded-3xl"}>
+                        <div className={"p-2 cursor-pointer"}>
                             {showPassword
                                 ? <svg onClick={toggleShowPassword} xmlns="http://www.w3.org/2000/svg" fill="none"
                                        viewBox="0 0 24 24" strokeWidth="1.5"

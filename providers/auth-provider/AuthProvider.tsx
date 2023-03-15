@@ -1,12 +1,11 @@
-import {getAccessToken} from "@/services/auth/auth.helper";
+import {getAccessToken, getRefreshToken} from "@/services/auth/auth.helper";
 import {FC, PropsWithChildren, useEffect} from "react";
-import {Tokens} from "@/store/user/user.interface";
 import {useActions} from "@/hooks/useActions";
 import {useAuth} from "@/hooks/useAuth";
 import {useRouter} from "next/router";
 import {toast} from "react-toastify";
-import Cookies from "js-cookie";
 
+// Компонент, который проверяет различные права пользователя при нахождении на той или иной странице
 const AuthProvider: FC<PropsWithChildren> = ({children}) => {
     const {user} = useAuth()
     const {checkAuth, logout} = useActions()
@@ -18,7 +17,7 @@ const AuthProvider: FC<PropsWithChildren> = ({children}) => {
     }, [])
 
     useEffect(() => {
-        const refreshToken = Cookies.get(Tokens.refreshToken)
+        const refreshToken = getRefreshToken()
         if (!refreshToken && user) {
             logout()
             router.push('/auth/signIn')

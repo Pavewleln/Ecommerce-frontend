@@ -8,6 +8,7 @@ interface IButtonForm {
     submit?: () => void
 }
 
+// Кастомный button
 export const ButtonForm: FC<IButtonForm> = ({isValid = true, label, isLoading = false, submit}: IButtonForm) => {
     return (
         <button

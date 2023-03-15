@@ -6,7 +6,9 @@ export const useAuthRedirect = () => {
     const {user} = useAuth()
     const {replace} = useRouter()
     useEffect(() => {
-        if (user) {
+        if (user && user.isAdmin === false) {
+            replace('/')
+        } else if(user && user.isAdmin === true) {
             replace('/')
         }
     }, [user])

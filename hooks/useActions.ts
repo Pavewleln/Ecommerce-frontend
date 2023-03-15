@@ -7,6 +7,7 @@ const rootActions = {
     ...userActions,
     ...UserActions
 }
+// Достаем все dispatch из store(альтернатива useDispatch)
 export const useActions = () => {
     const dispatch = useDispatch()
     return bindActionCreators(rootActions, dispatch)

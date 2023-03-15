@@ -1,13 +1,9 @@
-import {Footer} from "@/components/ui/Footer";
-import {FC, ReactNode} from "react";
+import {FC} from "react";
 import Head from "next/head";
+import {ILayout} from "@/components/layouts/layout.types";
 
-interface IAuthLayout {
-    children: ReactNode,
-    title: string
-}
-
-export const AuthLayout: FC<IAuthLayout> = ({children, title}) => {
+// Обертка для определенных страниц
+export const AuthLayout: FC<ILayout> = ({children, title}) => {
     return (
         <>
             <Head>
@@ -17,10 +13,10 @@ export const AuthLayout: FC<IAuthLayout> = ({children, title}) => {
             </Head>
             <main>
                 <section className="bg-gray-50 dark:bg-gray-900">
-                    <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+                    <div className="flex flex-col items-center justify-center px-6 py-4 mx-auto md:h-screen lg:py-0">
                         <div
                             className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-                            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+                            <div className="p-2 space-y-4 md:space-y-6 sm:p-5">
                                 {children}
                             </div>
                         </div>

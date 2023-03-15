@@ -1,7 +1,7 @@
 import {emailValidation, nameValidation, passwordValidation, surnameValidation} from "@/utils/validation";
-import {ButtonForm} from "@/components/ui/form-components/ButtonForm";
+import {ButtonForm} from "@/components/ui/Form-components/ButtonForm";
 import {SubmitHandler, useForm, useFormState} from "react-hook-form";
-import {TextField} from "@/components/ui/form-components/TextField";
+import {TextField} from "@/components/ui/Form-components/TextField";
 import {ISignUpResponse} from "@/store/user/user.interface";
 import {AuthLayout} from "@/components/layouts/AuthLayout";
 import {useAuthRedirect} from "@/hooks/useAuthRedirect";
@@ -10,20 +10,16 @@ import {useAuth} from "@/hooks/useAuth";
 import {toast} from "react-toastify";
 import {NextPage} from "next";
 import Link from "next/link";
+import {CheckBox} from "@/components/ui/Form-components/CheckBox";
 
 const SignUp: NextPage = () => {
-    useAuthRedirect()
-    // настройка
     const {register} = useActions()
     const {isLoading} = useAuth()
-    // const [register, {
-    //     isLoading: isLoadingRegister,
-    //     data: token,
-    //     isSuccess: isRegisterSuccess,
-    //     isError: isRegisterError,
-    //     error: registerError
-    // }] = useRegisterMutation()
 
+    // редирект если человек уже авторизован(данные о человеке уже есть)
+    useAuthRedirect()
+
+    // настройка
     const {
         handleSubmit,
         control,
@@ -34,7 +30,8 @@ const SignUp: NextPage = () => {
             surname: '',
             email: '',
             password: '',
-            phone: ''
+            phone: '',
+            isAdmin: false
         },
         mode: "onChange"
     });
@@ -42,35 +39,16 @@ const SignUp: NextPage = () => {
         control
     })
 
-    // Если успешно
-    // useEffect(() => {
-    //     if (isRegisterSuccess && token) {
-    //         dispatch(setToken({token}))
-    //         setTimeout(() => {
-    //             router.push('/')
-    //         }, 1000)
-    //         toast.success("Вы успешно авторизованы!")
-    //     }
-    // }, [isRegisterSuccess])
-
-    // Если ошибка
-    // useEffect(() => {
-    //     if (isRegisterError) {
-    //         toast.error((registerError as any).data.message)
-    //     }
-    // }, [isRegisterError])
-
     const onSubmit: SubmitHandler<ISignUpResponse> = async (registerData) => {
         try {
             await register(registerData)
-            toast.success("Вы успешно зарегистрировались")
         } catch (err) {
             toast.error('Ошибка. Попробуйте позже')
         }
     };
     return (
         <AuthLayout title={"Регистрация"}>
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
                 Зарегистрироваться
             </h1>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-6">
@@ -129,15 +107,18 @@ const SignUp: NextPage = () => {
                     error={errors.password}
                     id={"password"}
                 />
+                <CheckBox
+                    name={"isAdmin"}
+                    type={"checkbox"}
+                    label={"Я продавец"}
+                    id={"isAdmin"}
+                    control={control}/>
                 <ButtonForm isLoading={isLoading} isValid={isValid}
                             label={"Зарегистрироваться"}/>
-                <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                <Link href={"signIn"}
+                      className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500 text-center flex justify-center">
                     Уже есть аккаунт?
-                    <Link href={"signIn"}
-                          className="font-medium text-primary-600 hover:underline dark:text-primary-500">
-                        Войти
-                    </Link>
-                </p>
+                </Link>
             </form>
         </AuthLayout>
     )

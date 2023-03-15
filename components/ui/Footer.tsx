@@ -8,10 +8,13 @@ export const Footer = () => {
         {href: "/support", label: "Поддержка"},
         {href: "/logout", label: "Выйти"},
     ]
+
     return (
-        <footer className="p-4 bg-white rounded-lg flex-col-reverse shadow flex items-center justify-between p-6 dark:bg-gray-800 sm:flex-row">
-            <span className="text-sm text-gray-500 text-center dark:text-gray-400">© 2023
-                <a target={"_blank"} href="https://github.com/Pavewleln" className="hover:underline">Kulikov Pavel</a>
+        <footer
+            className="p-4 bg-white rounded-lg flex-col-reverse shadow flex items-center justify-between p-6 dark:bg-gray-800 sm:flex-row max-h-[10vh]">
+            <span className="text-sm text-gray-500 text-center dark:text-gray-400 m-2">© 2023
+                <a target={"_blank"} href="https://github.com/Pavewleln"
+                   className="hover:underline">Kulikov Pavel</a>
             </span>
             <ul className="flex flex-wrap items-center justify-center mb-3 text-sm text-gray-500 dark:text-gray-400 sm:mb-0">
                 {navigation.map(({href, label}) => (

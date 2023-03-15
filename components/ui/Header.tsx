@@ -1,21 +1,36 @@
 import {Bars3Icon, XMarkIcon} from "@heroicons/react/24/outline";
 import {Disclosure, Menu, Transition} from '@headlessui/react';
-import { LogoutPopup } from "./popups/LogoutPopup";
+import {LogoutPopup} from "./Popups/LogoutPopup";
 import {classNames} from "@/utils/classNames";
 import {FC, Fragment, useState} from "react";
 import {useRouter} from "next/router";
 import Link from "next/link";
+import {MoonIcon, SunIcon} from "@heroicons/react/24/solid";
+import {useTheme} from "next-themes";
 
+// Для темы
+enum Theme {
+    LIGHT = 'light',
+    DARK = 'dark'
+}
+
+// Навигация
 const navigation = [
     {name: 'Главная', href: '/', current: true},
-    {name: 'Транзакции', href: '/transactions', current: false},
-    // {name: 'Счета', href: '/accounts', current: false},
+    {name: 'История', href: '/history', current: false},
     {name: 'Поддержка', href: '/support', current: false}
 ]
 
 export const Header: FC = () => {
+    // Настройка темы
+    const {systemTheme, theme, setTheme} = useTheme()
+    const currentTheme = theme === 'system' ? systemTheme : theme
+
     const {pathname} = useRouter()
+    // Поиск
     const [search, setSearch] = useState<string>('')
+
+    // Модальное окно logout
     const [showLogoutModal, setShowLogoutModal] = useState(false);
 
     return (
@@ -75,20 +90,28 @@ export const Header: FC = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-
+                                <div
+                                    className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                                     {/*Дропдаун профиля*/}
                                     <Menu as="div" className="relative ml-3 z-50">
-                                        <div>
+                                        <div className={"flex items-center"}>
                                             <Menu.Button
                                                 className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                                                 <span className="sr-only">Open user menu</span>
                                                 <label
-                                                        className="cursor-pointer relative inline-flex items-center justify-center w-8 h-8 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 hover:bg-gray-300 transition-all">
+                                                    className="cursor-pointer relative inline-flex items-center justify-center w-8 h-8 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 hover:bg-gray-300 transition-all">
                                                         <span
                                                             className="font-medium text-gray-600 dark:text-gray-300"></span>
-                                                    </label>
+                                                </label>
                                             </Menu.Button>
+                                            <div className={"ml-4"}>
+                                                {currentTheme === Theme.DARK
+                                                    ? <SunIcon className={"w-7 h-7"} role={"button"}
+                                                               onClick={() => setTheme(Theme.LIGHT)}/>
+                                                    : <MoonIcon className={"w-7 h-7 text-white"} role={"button"}
+                                                                onClick={() => setTheme(Theme.DARK)}/>
+                                                }
+                                            </div>
                                         </div>
                                         <Transition
                                             as={Fragment}
@@ -103,18 +126,10 @@ export const Header: FC = () => {
                                                 className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                                 <Menu.Item>
                                                     <Link
-                                                        href={"/profile"}
+                                                        href={"/auth/profile"}
                                                         className={'block px-4 py-2 text-sm text-gray-700'}
                                                     >
-                                                        Твой профиль
-                                                    </Link>
-                                                </Menu.Item>
-                                                <Menu.Item>
-                                                    <Link
-                                                        href={"/settings"}
-                                                        className={'block px-4 py-2 text-sm text-gray-700'}
-                                                    >
-                                                        Настройки
+                                                        Профиль
                                                     </Link>
                                                 </Menu.Item>
                                                 <Menu.Item>
@@ -166,6 +181,7 @@ export const Header: FC = () => {
                     </>
                 )}
             </Disclosure>
+            {/*Logout*/}
             <LogoutPopup showModal={showLogoutModal} setShowModal={setShowLogoutModal}/>
         </>
     )

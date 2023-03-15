@@ -1,11 +1,11 @@
 import {IAuthResponse, ISignInResponse, ISignUpResponse, Tokens} from "@/store/user/user.interface";
-import {saveTokensStorage} from "@/services/auth/auth.helper";
+import {getRefreshToken, saveTokensStorage} from "@/services/auth/auth.helper";
 import {getContentType} from "@/api/api.helper";
 import {instance} from "@/api/api.interceptors";
-import Cookies from "js-cookie"
 import axios from "axios";
 
 export const AuthService = {
+    // Вход
     async signIn(data: ISignInResponse) {
         const response = await instance<IAuthResponse>({
             url: 'auth/login',
@@ -15,6 +15,7 @@ export const AuthService = {
         if (response.data.accessToken) saveTokensStorage(response.data)
         return response.data
     },
+    // Регистрация
     async signUp(data: ISignUpResponse) {
         const response = await instance<IAuthResponse>({
             url: 'auth/register',
@@ -24,8 +25,9 @@ export const AuthService = {
         if (response.data.accessToken) saveTokensStorage(response.data)
         return response.data
     },
+    // Проверка подлинности refresh и получение обновленных данных о пользователе
     async getNewTokens() {
-        const refreshToken = Cookies.get(Tokens.refreshToken)
+        const refreshToken = getRefreshToken()
         const response = await axios.post<string, { data: IAuthResponse }>(process.env.SERVER_URL + 'auth/refresh',
             {refreshToken},
             {
@@ -35,6 +37,7 @@ export const AuthService = {
         if (response.data.accessToken) saveTokensStorage(response.data)
         return response.data
     },
+    // Выход(при выходе мы удаляем refresh токен на сервере)
     async logout() {
         const response = await instance<void>({
             url: 'auth/logout',

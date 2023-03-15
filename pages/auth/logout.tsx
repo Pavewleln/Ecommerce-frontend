@@ -1,5 +1,4 @@
 import {Loader} from "@/components/ui/Loader";
-import {MainLayout} from "@/components/layouts/MainLayout";
 import {useEffect} from "react";
 import {useActions} from "@/hooks/useActions";
 import {useRouter} from "next/router";
@@ -14,9 +13,9 @@ const Logout = () => {
         }, 500)
     }, [])
     return (
-        <MainLayout title={"Выход"}>
+        <div className={"h-screen flex items-center justify-center"}>
             <Loader/>
-        </MainLayout>
+        </div>
     )
 }
 export default Logout

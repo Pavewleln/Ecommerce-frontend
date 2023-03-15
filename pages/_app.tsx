@@ -20,7 +20,7 @@ export default function App({Component, pageProps}: AppProps) {
     return (
         <QueryClientProvider client={queryClient}>
             <Provider store={store}>
-                <ThemeProvider>
+                <ThemeProvider enableSystem={true} attribute={"class"}>
                     <AuthProvider>
                         <Component {...pageProps} />
                         <ToastContainer/>

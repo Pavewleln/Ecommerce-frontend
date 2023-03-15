@@ -5,13 +5,15 @@ export interface IUser {
     name: string,
     surname: string,
     avatarUrl: string,
-    phone: string
+    phone: string,
+    isAdmin: boolean
 }
 
 // Типы для входа
 export interface ISignInResponse {
     email: string,
-    password: string
+    password: string,
+    isAdmin: boolean
 }
 
 // Типы для регистрации
@@ -20,7 +22,8 @@ export interface ISignUpResponse {
     surname: string,
     email: string,
     password: string,
-    phone: string
+    phone: string,
+    isAdmin: boolean
 }
 
 // Виды токена
@@ -39,6 +42,7 @@ export interface IInitialState {
 export interface IAuthResponse extends ITokens {
     user: IUser
 }
+// Виды токенов
 export enum Tokens {
     refreshToken = 'refresh-token',
     accessToken = 'access-token'

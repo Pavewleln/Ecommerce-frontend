@@ -2,10 +2,10 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import {IAuthResponse, ISignInResponse, ISignUpResponse} from "@/store/user/user.interface";
 import {AuthService} from "@/services/auth/auth.service";
 import {errorCatch} from "@/api/api.helper";
-import {useRouter} from "next/router";
 import {removeFromStorage} from "@/services/auth/auth.helper";
 import {toast} from "react-toastify";
 
+// Регистрация
 export const register = createAsyncThunk<IAuthResponse, ISignUpResponse>(
     'auth/register',
     async (data, thunkApi) => {
@@ -18,6 +18,7 @@ export const register = createAsyncThunk<IAuthResponse, ISignUpResponse>(
         }
     }
 )
+// Вход
 export const login = createAsyncThunk<IAuthResponse, ISignInResponse>(
     'auth/login',
     async (data, thunkApi) => {
@@ -31,6 +32,7 @@ export const login = createAsyncThunk<IAuthResponse, ISignInResponse>(
         }
     }
 )
+// Выход
 export const logout = createAsyncThunk(
     'auth/logout',
     async () => {
@@ -39,6 +41,7 @@ export const logout = createAsyncThunk(
         toast.success("Вы успешно вышли")
     }
 )
+// Проверка подлинности refresh и получение обновленных данных о пользователе
 export const checkAuth = createAsyncThunk<IAuthResponse>(
     'auth/check-auth',
     async (_, thunkApi) => {

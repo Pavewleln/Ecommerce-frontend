@@ -1,14 +1,11 @@
-import { Header } from "../ui/Header";
-import {FC, ReactNode} from "react";
+import {Header} from "../ui/Header";
+import {FC} from "react";
 import {Footer} from "../ui/Footer";
 import Head from "next/head";
+import {ILayout} from "@/components/layouts/layout.types";
 
-interface IMainLayout {
-    children: ReactNode,
-    title: string
-}
-
-export const MainLayout: FC<IMainLayout> = ({children, title}) => {
+// Обертка для определенных страниц
+export const MainLayout: FC<ILayout> = ({children, title}) => {
     return (
         <>
             <Head>
@@ -17,7 +14,7 @@ export const MainLayout: FC<IMainLayout> = ({children, title}) => {
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
             </Head>
             <Header/>
-            <main className={"min-h-screen"}>
+            <main className={"min-h-screen py-5 px-10"}>
                 {children}
             </main>
             <Footer/>

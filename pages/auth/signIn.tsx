@@ -1,7 +1,7 @@
 import {emailValidation, passwordValidation} from "@/utils/validation";
-import {ButtonForm} from "@/components/ui/form-components/ButtonForm";
+import {ButtonForm} from "@/components/ui/Form-components/ButtonForm";
 import {SubmitHandler, useForm, useFormState} from "react-hook-form";
-import {TextField} from "@/components/ui/form-components/TextField";
+import {TextField} from "@/components/ui/Form-components/TextField";
 import {ISignInResponse} from "@/store/user/user.interface";
 import {AuthLayout} from "@/components/layouts/AuthLayout";
 import {useAuthRedirect} from "@/hooks/useAuthRedirect";
@@ -10,61 +10,37 @@ import {useAuth} from "@/hooks/useAuth";
 import {toast} from "react-toastify";
 import {NextPage} from "next";
 import Link from "next/link";
+import {CheckBox} from "@/components/ui/Form-components/CheckBox";
 
 const SignIn: NextPage = () => {
-    // редирект если человек уже авторизован(данные о человеке уже есть)
-    useAuthRedirect()
-    // настройка
     const {login} = useActions()
     const {isLoading} = useAuth()
-    // const [login, {
-    //     data: token,
-    //     isLoading: isLoadingLogin,
-    //     isSuccess: isLoginSuccess,
-    //     isError: isLoginError,
-    //     error: loginError
-    // }] = useLoginMutation()
 
+    // редирект если человек уже авторизован(данные о человеке уже есть)
+    useAuthRedirect()
+
+    // настройка
     const {handleSubmit, control, formState: {isValid}} = useForm<ISignInResponse>({
         defaultValues: {
             email: "",
-            password: ""
+            password: "",
+            isAdmin: false
         },
         mode: "onChange"
     });
     const {errors} = useFormState({
         control
     })
-
-    // Если успешно
-    // useEffect(() => {
-    //     if (isLoginSuccess && token) {
-    //         dispatch(setToken({token}))
-    //         setTimeout(() => {
-    //             router.push('/')
-    //         }, 1000)
-    //         toast.success("Вы успешно авторизованы!")
-    //     }
-    // }, [isLoginSuccess])
-
-    // Если ошибка
-    // useEffect(() => {
-    //     if (isLoginError) {
-    //         toast.error((loginError as any).data.message)
-    //     }
-    // }, [isLoginError])
-
     const onSubmit: SubmitHandler<ISignInResponse> = async (loginData) => {
         try {
             await login(loginData)
-            toast.success("Вы успешно авторизовались")
         } catch (err) {
             toast.error('Ошибка. Попробуйте позже')
         }
     }
     return (
         <AuthLayout title={"Вход"}>
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
                 Войти
             </h1>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-6">
@@ -90,14 +66,17 @@ const SignIn: NextPage = () => {
                     placeholder={"******"}
                     id={"password"}
                 />
+                <CheckBox
+                    name={"isAdmin"}
+                    type={"checkbox"}
+                    label={"Я продавец"}
+                    id={"isAdmin"}
+                    control={control}/>
                 <ButtonForm isLoading={isLoading} isValid={isValid} label={"Войти"}/>
-                <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                    Еще нет аккаунта?
-                    <Link href={"signUp"}
-                          className="font-medium text-primary-600 hover:underline dark:text-primary-500">
-                        Зарегистрироваться
-                    </Link>
-                </p>
+                <Link href={"signUp"}
+                      className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500 text-center flex justify-center">
+                    Еще нет аккаунта ?
+                </Link>
             </form>
         </AuthLayout>
     )
