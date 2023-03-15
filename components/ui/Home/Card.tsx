@@ -1,23 +1,14 @@
-import img from '../../../assets/images/image-1.jpg'
+import {ICard} from '@/store/products/products.interface';
 import Image from "next/image";
 import {FC} from "react";
 import Link from "next/link";
 
-export interface ICard {
-    _id: string,
-    title: string,
-    price: number,
-    kol: number,
-    description: string,
-    imageUrl: string,
-    type: string
-}
-
-export const Card: FC<ICard> = ({_id, kol, description, price, title, imageUrl, type}) => {
+export const Card: FC<ICard> = ({_id, kol, description, price, title, imageUrl, type, seller}) => {
     return (
-        <div className="max-w-[16rem] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-2 hover:shadow-md transition-all">
+        <div
+            className="max-w-[16rem] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-2 hover:shadow-md transition-all">
             <Link href={`/product/${_id}`}>
-                <Image className="rounded-t-lg" src={img} alt="Product"/>
+                <Image className="rounded-t-lg p-2" src={imageUrl} alt="Product" width={254} height={169}/>
             </Link>
             <div className="p-3">
                 <a href="#">

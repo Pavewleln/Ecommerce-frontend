@@ -29,7 +29,7 @@ export const TextField: FC<ITextField> = ({
         setShowPassword((prevState) => !prevState);
     };
     return (
-        <div>
+        <div className={"m-2"}>
             <label htmlFor="phone"
                    className="block text-sm font-medium text-gray-900 dark:text-white">
                 {label}

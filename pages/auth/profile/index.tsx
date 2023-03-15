@@ -1,17 +1,16 @@
-import {UpdateProfilePopup} from "@/components/ui/Popups/UpdateProfilePopup";
 import {MainLayout} from "@/components/layouts/MainLayout";
 import {useAuth} from "@/hooks/useAuth";
 import {useRouter} from "next/router";
-import {useState} from "react";
+import {Back} from "@/components/ui/Back";
 
 const Profile = () => {
-    const [showModal, setShowModal] = useState(false);
-    const {back} = useRouter()
+    const router = useRouter()
     const auth = useAuth()
     return (
         <MainLayout title={"Профиль"}>
+            <Back/>
             <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16 relative">
-                <svg onClick={() => setShowModal(true)} xmlns="http://www.w3.org/2000/svg" fill="none"
+                <svg onClick={() => router.push("profile/edit")} xmlns="http://www.w3.org/2000/svg" fill="none"
                      viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"
                      className="w-6 h-6 cursor-pointer hover:w-8 hover:h-8 transition-all absolute top-2 left-2 lg:top-10 lg:left-0 dark:text-white">
                     <path strokeLinecap="round" strokeLinejoin="round"
@@ -37,19 +36,7 @@ const Profile = () => {
                     {auth?.user?.name}
                 </h2>
                 <p className="mb-4 text-xl font-extrabold leading-none text-gray-900 md:text-2xl dark:text-white flex justify-center">{auth?.user?.email}</p>
-                <div className="flex items-center space-x-4">
-                    <button onClick={() => back()} type="button"
-                            className="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
-                             stroke="currentColor" className="w-4 h-4 mr-2">
-                            <path strokeLinecap="round" strokeLinejoin="round"
-                                  d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"/>
-                        </svg>
-                        Назад
-                    </button>
-                </div>
             </div>
-            <UpdateProfilePopup showModal={showModal} setShowModal={setShowModal}/>
         </MainLayout>
     )
 }
