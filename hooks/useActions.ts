@@ -1,11 +1,13 @@
-import * as userActions from '../store/user/user.actions'
+import * as userActions from "../store/user/user.actions";
+import {BasketActions} from "@/store/basket/basket.slice";
+import {UserActions} from '@/store/user/user.slice';
 import {bindActionCreators} from "@reduxjs/toolkit";
 import {useDispatch} from "react-redux";
-import { UserActions } from '@/store/user/user.slice';
 
 const rootActions = {
     ...userActions,
-    ...UserActions
+    ...UserActions,
+    ...BasketActions
 }
 // Достаем все dispatch из store(альтернатива useDispatch)
 export const useActions = () => {

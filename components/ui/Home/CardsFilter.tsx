@@ -1,9 +1,9 @@
-import {ICard} from "@/store/products/products.interface";
+import {IProduct} from "@/services/products/products.interface";
 import {groupCategories} from "@/utils/groupCategories";
 import {classNames} from "@/utils/classNames";
 import {useMemo, useState} from "react";
 
-export const CardsFilter = ({cards}: { cards: ICard[] }) => {
+export const CardsFilter = ({cards}: { cards: IProduct[] }) => {
     const [dropdown, setDropdown] = useState<boolean>(false)
     const categories = groupCategories(cards)
     return (

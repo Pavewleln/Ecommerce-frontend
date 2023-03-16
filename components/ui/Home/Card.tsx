@@ -1,9 +1,9 @@
-import {ICard} from '@/store/products/products.interface';
+import {IProduct} from '@/services/products/products.interface';
 import Image from "next/image";
 import {FC} from "react";
 import Link from "next/link";
 
-export const Card: FC<ICard> = ({_id, kol, description, price, title, imageUrl, type, seller}) => {
+export const Card: FC<IProduct> = ({_id, kol, description, price, title, imageUrl, type, seller}) => {
     return (
         <div
             className="max-w-[16rem] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-2 hover:shadow-md transition-all">

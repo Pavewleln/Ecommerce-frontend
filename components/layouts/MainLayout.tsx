@@ -3,6 +3,7 @@ import {FC} from "react";
 import {Footer} from "../ui/Footer";
 import Head from "next/head";
 import {ILayout} from "@/components/layouts/layout.types";
+import {CookiesConsentPopup} from "@/components/ui/Popups/CookiesConsentPopup";
 
 // Обертка для определенных страниц
 export const MainLayout: FC<ILayout> = ({children, title}) => {
@@ -18,6 +19,7 @@ export const MainLayout: FC<ILayout> = ({children, title}) => {
                 {children}
             </main>
             <Footer/>
+            <CookiesConsentPopup/>
         </>
     )
 }

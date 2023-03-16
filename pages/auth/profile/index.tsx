@@ -1,11 +1,12 @@
 import {MainLayout} from "@/components/layouts/MainLayout";
+import {Back} from "@/components/ui/Back";
 import {useAuth} from "@/hooks/useAuth";
 import {useRouter} from "next/router";
-import {Back} from "@/components/ui/Back";
+import Image from "next/image";
 
 const Profile = () => {
     const router = useRouter()
-    const auth = useAuth()
+    const {user} = useAuth()
     return (
         <MainLayout title={"Профиль"}>
             <Back/>
@@ -18,24 +19,25 @@ const Profile = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                 </svg>
                 <div className={"flex items-center justify-center"}>
-                    {auth?.user?.avatarUrl
+                    {user?.avatarUrl
                         ? <label
                             className="relative inline-flex items-center justify-center w-36 h-36 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 hover:bg-gray-300 transition-all">
-                            <img className="rounded w-36 h-36"
-                                 src={`${process.env.SERVER_URL}${auth?.user?.avatarUrl}`}
-                                 alt="Extra large avatar"/>
+                            <Image className="rounded w-36 h-36"
+                                 src={`${process.env.SERVER_URL}${user?.avatarUrl}`}
+                                 alt="Extra large avatar"
+                            width={100} height={100}/>
                         </label>
                         : <label
                             className="relative inline-flex items-center justify-center w-36 h-36 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
                             <span
-                                className="font-medium text-gray-600 dark:text-gray-300">{auth?.user?.name.slice(0, 1)}{auth?.user?.surname.slice(0, 1)}</span>
+                                className="font-medium text-gray-600 dark:text-gray-300">{user?.name.slice(0, 1)}{user?.surname.slice(0, 1)}</span>
                         </label>
                     }
                 </div>
                 <h2 className="mb-2 text-xl font-semibold leading-none text-gray-900 md:text-2xl dark:text-white flex justify-center">
-                    {auth?.user?.name}
+                    {user?.name}
                 </h2>
-                <p className="mb-4 text-xl font-extrabold leading-none text-gray-900 md:text-2xl dark:text-white flex justify-center">{auth?.user?.email}</p>
+                <p className="mb-4 text-xl font-extrabold leading-none text-gray-900 md:text-2xl dark:text-white flex justify-center">{user?.email}</p>
             </div>
         </MainLayout>
     )

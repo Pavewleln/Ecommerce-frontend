@@ -2,12 +2,12 @@ import {HomeSkeleton} from "@/components/ui/Skeletons/HomeSkeleton";
 import {SearchProduct} from "@/components/ui/Home/SearchProduct";
 import {CardsFilter} from "@/components/ui/Home/CardsFilter";
 import {MainLayout} from "@/components/layouts/MainLayout";
-import {ICard} from "@/store/products/products.interface";
+import {IProduct} from "@/services/products/products.interface";
 import {Card} from "@/components/ui/Home/Card";
 import {useMemo} from "react";
 
 const HomePage = () => {
-    const cards: ICard[] = [
+    const cards: IProduct[] = [
         {
             _id: "laiuvbo783gv4,kadv",
             kol: 45,

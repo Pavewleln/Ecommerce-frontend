@@ -56,6 +56,7 @@ const Edit = () => {
                 email,
                 password
             })
+            toast.success("Профиль успешно обновлен");
         } catch (err) {
             toast.error("Ошибка. Попробуйте позже")
         }

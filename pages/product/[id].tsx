@@ -26,12 +26,12 @@ const Product = () => {
                         <p className="mb-4 text-xl font-bold leading-none text-gray-900 md:text-дп dark:text-white">На складе: {kol}</p>
                     </div>
                     <dl>
-                        <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Details</dt>
+                        <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Детали</dt>
                         <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">{description}</dd>
                     </dl>
                     <dl className="flex items-center space-x-6">
                         <div>
-                            <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Category</dt>
+                            <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Категория</dt>
                             <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">{type}</dd>
                         </div>
                     </dl>
