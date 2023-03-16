@@ -10,6 +10,7 @@ import {IUpdateResponse} from "@/store/user/user.interface";
 import {updateProfile} from "@/store/user/user.actions";
 import {MainLayout} from "@/components/layouts/MainLayout";
 import {Back} from "@/components/ui/Back";
+import Image from "next/image";
 
 const Edit = () => {
     const [imageUrl, setImageUrl] = useState("");
@@ -89,9 +90,10 @@ const Edit = () => {
                                         : <div className={"relative"}>
                                             <div
                                                 className={"inline-flex items-center justify-center w-36 h-36 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 hover:bg-gray-300 transition-all"}>
-                                                <img className="rounded w-36 h-36"
-                                                     src={`${process.env.SERVER_URL}${imageUrl}`}
-                                                     alt="Extra large avatar"/>
+                                                <Image className="rounded w-36 h-36"
+                                                       src={`${process.env.SERVER_URL}${imageUrl}`}
+                                                       alt="Extra large avatar"
+                                                       width={100} height={100}/>
                                             </div>
                                             <svg onClick={() => setImageUrl("")}
                                                  xmlns="http://www.w3.org/2000/svg" fill="none"

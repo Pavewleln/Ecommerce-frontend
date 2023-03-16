@@ -1,4 +1,4 @@
-import {ICard} from "@/components/ui/Home/Card";
+import {ICard} from "@/components/ui/Home/Card/Card";
 import {useMemo} from "react";
 
 export const groupCategories = (cards: ICard[]) => useMemo(() => {

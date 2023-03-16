@@ -12,11 +12,11 @@ export const basketSlice = createSlice({
         addToBasket: (state, action: PayloadAction<IAddToBasketPayload>) => {
             const isExistSize = state.items.some(item => item.product._id === action.payload.product._id)
             if (!isExistSize) {
-                state.items.push({...action.payload, _id: state.items.length})
+                state.items.push({...action.payload, _id: action.payload.product._id})
             }
         },
-        removeFromBasket: (state, action: PayloadAction<{ _id: number }>) => {
-            state.items = state.items.filter(item => item._id === action.payload._id)
+        removeFromBasket: (state, action: PayloadAction<{ _id: string }>) => {
+            state.items = state.items.filter(item => item._id !== action.payload._id)
         },
         changeQuantity: (state, action: PayloadAction<IChangeQuantityPayload>) => {
             const {_id, type} = action.payload

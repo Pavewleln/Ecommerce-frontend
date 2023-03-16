@@ -1,11 +1,11 @@
 import {IProduct} from "@/services/products/products.interface";
 import {groupCategories} from "@/utils/groupCategories";
 import {classNames} from "@/utils/classNames";
-import {useMemo, useState} from "react";
+import {FC, useMemo, useState} from "react";
 
-export const CardsFilter = ({cards}: { cards: IProduct[] }) => {
+export const CardsFilter: FC<{ products: IProduct[] }> = ({products}) => {
     const [dropdown, setDropdown] = useState<boolean>(false)
-    const categories = groupCategories(cards)
+    const categories = groupCategories(products)
     return (
         <>
             {/*При большом окне*/}
@@ -56,7 +56,7 @@ export const CardsFilter = ({cards}: { cards: IProduct[] }) => {
                             </h6>
                             <ul className="space-y-2 text-sm" aria-labelledby="dropdownDefault">
                                 {categories && categories.map(({matches, label}, index) => useMemo(() => (
-                                    <li className="flex items-center" key={index}>
+                                    <li key={index}>
                                         <input id={label} type="checkbox" value={label}
                                                className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500 cursor-pointer"/>
                                         <label htmlFor={label}

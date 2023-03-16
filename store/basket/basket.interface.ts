@@ -1,7 +1,7 @@
 import {IProduct} from "@/services/products/products.interface";
 
 export interface IBasketItem {
-    _id: number,
+    _id: string,
     product: IProduct,
     quantity: number,
     price: number

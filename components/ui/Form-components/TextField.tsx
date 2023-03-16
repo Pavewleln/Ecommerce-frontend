@@ -1,9 +1,9 @@
-import {Control, Controller} from "react-hook-form";
+import {Controller} from "react-hook-form";
 import {FC, useCallback, useState} from "react";
 
 interface ITextField {
     id: string,
-    control: Control,
+    control: any,
     label: string,
     name: string,
     type: string,
