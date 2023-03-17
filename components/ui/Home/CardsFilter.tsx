@@ -10,7 +10,7 @@ export const CardsFilter: FC<{ products: IProduct[] }> = ({products}) => {
         <>
             {/*При большом окне*/}
             <div className={"text-center mt-2 hidden md:block"}>
-                <div className={"z-10 w-48 p-3 bg-white rounded-lg shadow dark:bg-gray-700 text-center m-auto"}>
+                <div className={"z-10 w-40 p-3 bg-white rounded-lg shadow dark:bg-gray-700 text-center m-auto"}>
                     <div className={"mb-4"}>
                         <h6 className="mb-3 text-sm font-medium text-gray-900 dark:text-white">
                             Категории

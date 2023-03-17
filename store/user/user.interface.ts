@@ -32,8 +32,7 @@ export interface IUpdateResponse {
     surname: string,
     phone: string,
     avatarUrl: string,
-    email: string,
-    password: string
+    email: string
 }
 
 // Виды токена

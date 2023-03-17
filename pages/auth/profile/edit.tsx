@@ -37,8 +37,7 @@ const Edit = () => {
             surname: user?.surname,
             phone: user?.surname,
             avatarUrl: user?.avatarUrl,
-            email: user?.email,
-            password: ""
+            email: user?.email
         },
         mode: "onChange"
     });
@@ -47,15 +46,14 @@ const Edit = () => {
         control
     })
 
-    const onSubmit: SubmitHandler<IUpdateResponse> = async ({name, avatarUrl, surname, phone, email, password}) => {
+    const onSubmit: SubmitHandler<IUpdateResponse> = async ({name, avatarUrl, surname, phone, email}) => {
         try {
             await updateProfile({
                 name,
                 surname,
                 phone,
                 avatarUrl,
-                email,
-                password
+                email
             })
             toast.success("Профиль успешно обновлен");
         } catch (err) {
@@ -149,17 +147,6 @@ const Edit = () => {
                                     placeholder={"@"}
                                     error={errors.email}
                                     id={"email"}
-                                />
-                                {/*Пароль*/}
-                                <TextField
-                                    name={"password"}
-                                    type={"password"}
-                                    control={control}
-                                    validation={passwordValidation}
-                                    label={"Пароль"}
-                                    placeholder={"******"}
-                                    error={errors.password}
-                                    id={"password"}
                                 />
                                 <ButtonForm isLoading={isLoading} isValid={isValid} label={"Изменить"}/>
                             </form>

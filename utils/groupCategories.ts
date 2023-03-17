@@ -1,7 +1,7 @@
-import {ICard} from "@/components/ui/Home/Card/Card";
+import { IProduct } from "@/services/products/products.interface";
 import {useMemo} from "react";
 
-export const groupCategories = (cards: ICard[]) => useMemo(() => {
+export const groupCategories = (cards: IProduct[]) => useMemo(() => {
     // Создаем массив, где будем потом хранить данные
     const categories: Array<{ label: string, matches: number }> = []
     // Объект для подсчета

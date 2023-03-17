@@ -10,8 +10,7 @@ export const register = createAsyncThunk<IAuthResponse, ISignUpResponse>(
     'auth/register',
     async (data, thunkApi) => {
         try {
-            const response = await AuthService.signUp(data)
-            return response
+            return await AuthService.signUp(data)
         } catch (err) {
             toast.error(errorCatch(err))
             return thunkApi.rejectWithValue(err)
@@ -23,8 +22,7 @@ export const updateProfile = createAsyncThunk<IAuthResponse, IUpdateResponse>(
     'auth/update',
     async (data, thunkApi) => {
         try {
-            const response = await AuthService.update(data)
-            return response
+            return await AuthService.update(data)
         } catch (err) {
             toast.error(errorCatch(err))
             return thunkApi.rejectWithValue(err)
@@ -36,9 +34,7 @@ export const login = createAsyncThunk<IAuthResponse, ISignInResponse>(
     'auth/login',
     async (data, thunkApi) => {
         try {
-            const response = await AuthService.signIn(data)
-            return response
-
+            return await AuthService.signIn(data)
         } catch (err) {
             toast.error(errorCatch(err))
             return thunkApi.rejectWithValue(err)
@@ -51,7 +47,6 @@ export const logout = createAsyncThunk(
     async () => {
         await AuthService.logout()
         removeFromStorage()
-        toast.success("Вы успешно вышли")
     }
 )
 // Проверка подлинности refresh и получение обновленных данных о пользователе
@@ -59,10 +54,9 @@ export const checkAuth = createAsyncThunk<IAuthResponse>(
     'auth/check-auth',
     async (_, thunkApi) => {
         try {
-            const response = await AuthService.getNewTokens()
-            return response
+            return await AuthService.getNewTokens()
         } catch (err) {
-            if (errorCatch(err) === 'jwt expired') {
+            if (errorCatch(err) === 'Вы не авторизованы') {
                 thunkApi.dispatch(logout())
             }
             return thunkApi.rejectWithValue(err)

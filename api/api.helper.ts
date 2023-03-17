@@ -8,5 +8,5 @@ export const errorCatch = (error: any): string => {
         // ? typeof error.responce.data.message === 'object'
         //     ? message[0]
         //     : message
-        // : error.message
+        // : error.error
 }
