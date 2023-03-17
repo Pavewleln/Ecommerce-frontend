@@ -3,6 +3,7 @@ import {IProduct} from '@/services/products/products.interface';
 import Image from "next/image";
 import {FC} from "react";
 import Link from "next/link";
+import {formatPrice} from "@/utils/formatPrice";
 
 export const Card: FC<{ product: IProduct }> = ({product}) => {
     const {_id, kol, description, price, title, imageUrl, type, seller} = product
@@ -15,7 +16,7 @@ export const Card: FC<{ product: IProduct }> = ({product}) => {
             <div className="p-3">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{title}</h5>
                 <div className="flex items-center justify-between mb-2">
-                    <span className="text-md font-bold text-gray-900 dark:text-white">${price}</span>
+                    <span className="text-md font-bold text-gray-900 dark:text-white">{formatPrice(price)}</span>
                     <span className="text-md font-bold text-gray-900 dark:text-white">На складе: {kol}</span>
                 </div>
                 <div className="flex items-center justify-end">

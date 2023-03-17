@@ -1,26 +1,26 @@
-import {TextField} from "@/components/ui/Form-components/TextField";
-import {emailValidation, nameValidation, passwordValidation, surnameValidation} from "@/utils/validation";
+import {emailValidation, nameValidation, surnameValidation} from "@/utils/validation";
 import {ButtonForm} from "@/components/ui/Form-components/ButtonForm";
-import {useState} from "react";
-import {useAuth} from "@/hooks/useAuth";
-import {instance} from "@/api/api.interceptors";
-import {toast} from "react-toastify";
 import {SubmitHandler, useForm, useFormState} from "react-hook-form";
+import {TextField} from "@/components/ui/Form-components/TextField";
 import {IUpdateResponse} from "@/store/user/user.interface";
-import {updateProfile} from "@/store/user/user.actions";
 import {MainLayout} from "@/components/layouts/MainLayout";
+import {update} from "@/store/user/user.actions";
 import {Back} from "@/components/ui/Back";
+import {useAuth} from "@/hooks/useAuth";
+import {toast} from "react-toastify";
+import {useState} from "react";
 import Image from "next/image";
+import axios from "axios";
 
 const Edit = () => {
-    const [imageUrl, setImageUrl] = useState("");
     const {user, isLoading} = useAuth()
+    const [imageUrl, setImageUrl] = useState<string | undefined>(user?.avatarUrl);
 
     const handleChangeFile = async (event: any) => {
         try {
             const formData = new FormData();
-            formData.append("image", event.target.files[0]);
-            const {data} = await instance.post("/upload", formData);
+            formData.append("avatarUrl", event.target.files[0]);
+            const {data} = await axios.post(`${process.env.SERVER_URL}upload`, formData)
             setImageUrl(data.url);
         } catch (err) {
             toast.error("Ошибка при загрузке файла");
@@ -35,8 +35,7 @@ const Edit = () => {
         defaultValues: {
             name: user?.name,
             surname: user?.surname,
-            phone: user?.surname,
-            avatarUrl: user?.avatarUrl,
+            phone: user?.phone,
             email: user?.email
         },
         mode: "onChange"
@@ -46,16 +45,11 @@ const Edit = () => {
         control
     })
 
-    const onSubmit: SubmitHandler<IUpdateResponse> = async ({name, avatarUrl, surname, phone, email}) => {
+    const onSubmit: SubmitHandler<IUpdateResponse> = async ({name, surname, email, phone}) => {
         try {
-            await updateProfile({
-                name,
-                surname,
-                phone,
-                avatarUrl,
-                email
-            })
-            toast.success("Профиль успешно обновлен");
+            const data = {name, surname, email, phone, avatarUrl: imageUrl}
+            await update(data)
+            // toast.success("Профиль успешно обновлен");
         } catch (err) {
             toast.error("Ошибка. Попробуйте позже")
         }
@@ -67,7 +61,7 @@ const Edit = () => {
                 <div
                     className="relative w-full max-w-lg p-4 mx-auto bg-white rounded-md shadow-lg dark:bg-gray-700">
                     <div className="mt-3">
-                        <div className="mt-2 text-center sm:text-left">
+                        <div className="mt-2 text-left">
                             <h4 className="text-lg font-medium text-gray-800 text-center dark:text-white">
                                 Изменить
                             </h4>
@@ -75,20 +69,18 @@ const Edit = () => {
                                 {/*Фото*/}
                                 <div className={"m-auto flex items-center justify-center mt-5"}>
                                     {!imageUrl
-                                        ? <div>
-                                            <label
-                                                className="cursor-pointer relative inline-flex items-center justify-center w-36 h-36 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 hover:bg-gray-300 transition-all">
-                                                <input className={"hidden"} id="avatar" type="file"
-                                                       onChange={(e) => handleChangeFile(e)}/>
-                                                <span
-                                                    className="font-medium text-gray-600 dark:text-gray-300">{user?.name.slice(0, 1)}{user?.surname.slice(0, 1)}</span>
-                                            </label>
-
-                                        </div>
+                                        ? <label
+                                            className="cursor-pointer relative inline-flex items-center justify-center w-36 h-36 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 hover:bg-gray-300 transition-all">
+                                            <input className={"hidden"} id="avatarUrl" type="file"
+                                                   onChange={(e) => handleChangeFile(e)}/>
+                                            <span
+                                                className="font-medium text-gray-600 dark:text-gray-300">{user?.name.slice(0, 1)}{user?.surname.slice(0, 1)}</span>
+                                        </label>
                                         : <div className={"relative"}>
                                             <div
                                                 className={"inline-flex items-center justify-center w-36 h-36 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 hover:bg-gray-300 transition-all"}>
-                                                <Image className="rounded w-36 h-36"
+                                                <Image loader={() => `${process.env.SERVER_URL}${imageUrl}`}
+                                                       className="rounded w-36 h-36"
                                                        src={`${process.env.SERVER_URL}${imageUrl}`}
                                                        alt="Extra large avatar"
                                                        width={100} height={100}/>

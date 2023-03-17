@@ -1,9 +1,9 @@
 import {IPopup} from "@/components/ui/Popups/popup.types";
+import {formatPrice} from "@/utils/formatPrice";
 import {useActions} from "@/hooks/useActions";
 import {useBasket} from "@/hooks/useBasket";
 import Image from "next/image";
 import {FC} from "react";
-import {formatPrice} from "@/utils/formatPrice";
 
 export const BasketPopup: FC<IPopup> = ({showModal, setShowModal}) => {
     const {items} = useBasket()

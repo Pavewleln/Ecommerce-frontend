@@ -2,6 +2,7 @@ import {emailValidation, nameValidation, passwordValidation, surnameValidation} 
 import {ButtonForm} from "@/components/ui/Form-components/ButtonForm";
 import {SubmitHandler, useForm, useFormState} from "react-hook-form";
 import {TextField} from "@/components/ui/Form-components/TextField";
+import {CheckBox} from "@/components/ui/Form-components/CheckBox";
 import {ISignUpResponse} from "@/store/user/user.interface";
 import {AuthLayout} from "@/components/layouts/AuthLayout";
 import {useAuthRedirect} from "@/hooks/useAuthRedirect";
@@ -10,7 +11,6 @@ import {useAuth} from "@/hooks/useAuth";
 import {toast} from "react-toastify";
 import {NextPage} from "next";
 import Link from "next/link";
-import {CheckBox} from "@/components/ui/Form-components/CheckBox";
 
 const SignUp: NextPage = () => {
     const {register} = useActions()
@@ -113,8 +113,7 @@ const SignUp: NextPage = () => {
                     label={"Я продавец"}
                     id={"isAdmin"}
                     control={control}/>
-                <ButtonForm isLoading={isLoading} isValid={isValid}
-                            label={"Зарегистрироваться"}/>
+                <ButtonForm isLoading={isLoading} isValid={isValid} label={"Зарегистрироваться"}/>
                 <Link href={"signIn"}
                       className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500 text-center flex justify-center">
                     Уже есть аккаунт?

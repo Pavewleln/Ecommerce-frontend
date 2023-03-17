@@ -2,7 +2,8 @@ import {AddToBasketButton} from "@/components/ui/Home/Card/AddToBasketButton";
 import {MainLayout} from "@/components/layouts/MainLayout";
 import {Back} from "@/components/ui/Back";
 import Image from "next/image";
-import { Comments } from "@/components/ui/Home/Card/Comments";
+import {Comments} from "@/components/ui/Home/Card/Comments";
+import {formatPrice} from "@/utils/formatPrice";
 
 const productInfo = {
     _id: "laiuvbo783gv4,kadv",
@@ -25,7 +26,7 @@ const Product = () => {
                 <div className="max-w-xl lg:py-16">
                     <h2 className="mb-2 text-xl font-semibold leading-none text-gray-900 md:text-2xl dark:text-white">{title}</h2>
                     <div className={"flex items-center justify-between"}>
-                        <p className="mb-4 text-xl font-extrabold leading-none text-gray-900 md:text-2xl dark:text-white">${price}</p>
+                        <p className="mb-4 text-xl font-extrabold leading-none text-gray-900 md:text-2xl dark:text-white">{formatPrice(price)}</p>
                         <p className="mb-4 text-xl font-bold leading-none text-gray-900 md:text-дп dark:text-white">На
                             складе: {kol}</p>
                     </div>

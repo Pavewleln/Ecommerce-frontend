@@ -28,11 +28,11 @@ export interface ISignUpResponse {
 
 // Типы для изменения данных
 export interface IUpdateResponse {
-    name: string,
-    surname: string,
-    phone: string,
-    avatarUrl: string,
-    email: string
+    name?: string,
+    surname?: string,
+    phone?: string,
+    avatarUrl?: string,
+    email?: string
 }
 
 // Виды токена

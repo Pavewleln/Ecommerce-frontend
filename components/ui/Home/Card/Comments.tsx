@@ -1,5 +1,7 @@
+import {formatDate} from "@/utils/formatDate";
+
 const comments = {
-    createdAt: "Feb. 8, 2022",
+    createdAt: '2023-03-16T19:00:37.409+00:00',
     text: "Very straight-to-point article. Really worth\n" +
         "                            time reading. Thank you! But tools are just the\n" +
         "                            instruments for the UX designers. The knowledge of the design tools are as important as the\n" +
@@ -9,6 +11,7 @@ const comments = {
 }
 export const Comments = () => {
     const {createdAt, text, author, avatar} = comments
+    console.log(createdAt)
     return (
         <section className="bg-white dark:bg-gray-900 py-8 lg:py-16">
             <div className="max-w-2xl mx-auto px-4">
@@ -36,7 +39,7 @@ export const Comments = () => {
                             alt={author}/>{author}</p>
                         <p className="text-sm text-gray-600 dark:text-gray-400">
                             <time dateTime={createdAt}
-                                  title={createdAt}>{createdAt}
+                                  title={createdAt}>{formatDate(createdAt)}
                             </time>
                         </p>
                     </div>

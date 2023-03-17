@@ -28,10 +28,12 @@ export const AuthService = {
     // Изменение профиля
     async update(data: IUpdateResponse) {
         const response = await instance<IAuthResponse>({
-            url: 'auth/edit',
-            method: 'PATCH',
-            data
-        })
+                url: 'auth/edit',
+                method: 'PATCH',
+                data
+            }
+        )
+        console.log(response.data) // добавить вывод в консоль
         if (response.data.accessToken) saveTokensStorage(response.data)
         return response.data
     },
