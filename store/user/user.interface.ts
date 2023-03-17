@@ -26,6 +26,15 @@ export interface ISignUpResponse {
     isAdmin: boolean
 }
 
+// Типы для изменения данных
+export interface IUpdateResponse {
+    name: string,
+    surname: string,
+    phone: string,
+    avatarUrl: string,
+    email: string
+}
+
 // Виды токена
 export interface ITokens {
     accessToken: string,

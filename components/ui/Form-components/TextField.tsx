@@ -1,5 +1,5 @@
 import {Controller} from "react-hook-form";
-import {FC, useState} from "react";
+import {FC, useCallback, useState} from "react";
 
 interface ITextField {
     id: string,
@@ -25,11 +25,11 @@ export const TextField: FC<ITextField> = ({
                                           }) => {
 
     const [showPassword, setShowPassword] = useState<boolean>(false);
-    const toggleShowPassword = () => {
+    const toggleShowPassword = useCallback(() => {
         setShowPassword((prevState) => !prevState);
-    };
+    }, []);
     return (
-        <div>
+        <div className={"m-2"}>
             <label htmlFor="phone"
                    className="block text-sm font-medium text-gray-900 dark:text-white">
                 {label}
@@ -72,7 +72,7 @@ export const TextField: FC<ITextField> = ({
                         </div>
                     }
                 </div>
-                {!!error &&
+                {error &&
                     <span
                         className="font-medium px-1 mb-1 text-sm text-red-800 rounded-lg dark:bg-gray-800 dark:text-red-400">
                     {error.message}
