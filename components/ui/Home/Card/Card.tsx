@@ -11,7 +11,10 @@ export const Card: FC<{ product: IProduct }> = ({product}) => {
         <div
             className="max-w-[16.5rem] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-2 hover:shadow-md transition-all">
             <Link href={`/products/${_id}`}>
-                <Image className="rounded-t-lg p-2" src={imageUrl} alt="Product" width={286} height={169}/>
+                {imageUrl
+                    ? <Image className="rounded-t-lg p-2" src={imageUrl} alt="Product" width={286} height={169}/>
+                    : <div className={"rounded-t-lg p-2 w-[260px] h-[169px] bg-gray-400"}></div>
+                }
             </Link>
             <div className="p-3">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{title}</h5>
