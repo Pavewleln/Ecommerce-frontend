@@ -19,7 +19,7 @@ export const useSearch = () => {
     // Запрос
     const {data, isLoading, refetch} = useQuery(['get all products'], () => ProductsService.getAll(debounce), {
         select: ({data}) => data as IProduct[],
-        staleTime: 120000
+        staleTime: 12000
     })
     // Запрос при изменении данных
     useEffect(() => {

@@ -4,21 +4,21 @@ import {IProduct} from "@/services/products/products.interface";
 import {Comments} from "@/components/ui/Home/Card/Comments";
 import {MainLayout} from "@/components/layouts/MainLayout";
 import {formatPrice} from "@/utils/formatPrice";
+import {classNames} from "@/utils/classNames";
 import {Back} from "@/components/ui/Back";
 import Image from "next/image";
 
 export const getStaticProps = async (context: { params: { id: string; } }) => {
-
     const {data} = await ProductsService.getById(context.params.id);
-
     return {
         props: {
-            data,
+            data
         }
     };
 };
 
 const Product = ({data}: { data: IProduct }) => {
+    const {kol, description, price, title, imageUrl, type, _id, seller} = data
     return (
         <MainLayout title={data ? data.title : ""}>
             <Back/>
@@ -26,32 +26,34 @@ const Product = ({data}: { data: IProduct }) => {
                 ? <>
                     <section
                         className="mx-auto bg-white dark:bg-gray-900 flex items-center justify-around flex-col md:flex-row">
-                        {data.imageUrl
-                            ? <Image src={data.imageUrl} alt={"Product"} width={400} height={400}
+                        {imageUrl
+                            ? <Image src={imageUrl} alt={"Product"} width={400} height={400}
                                      className={"m-5"}/>
-                            : <div className={"m-5 w-full max-w-[500px] h-[400px] bg-gray-300"}></div>
+                            : <div
+                                className={"m-5 w-full max-w-[500px] min-w-[300px] md:min-w-[350px] min-h-[300px] h-max sm:h-[300px] md:h-[400px] bg-gray-100 rounded-2xl flex items-center justify-center text-gray-400"}>Нет
+                                фото</div>
                         }
                         <div className="max-w-xl lg:py-16">
-                            <h2 className="mb-2 text-xl font-semibold leading-none text-gray-900 md:text-2xl dark:text-white">{data.title}</h2>
+                            <h2 className="mb-2 text-xl font-semibold leading-none text-gray-900 md:text-2xl dark:text-white">{title}</h2>
                             <div className={"flex items-center justify-between"}>
-                                <p className="mb-4 text-xl font-extrabold leading-none text-gray-900 md:text-2xl dark:text-white">{formatPrice(data.price)}</p>
-                                <p className="mb-4 text-xl font-bold leading-none text-gray-900 md:text-дп dark:text-white">На
-                                    складе: {data.kol}</p>
+                                <p className="mb-4 text-xl font-extrabold leading-none text-gray-900 md:text-2xl dark:text-white">{formatPrice(price)}</p>
+                                <p className={classNames(!kol || kol <= 0 ? "text-red-400" : "", "mb-4 text-xl font-bold leading-none text-gray-900 dark:text-white")}>На
+                                    складе: {!kol || kol <= 0 ? 0 : kol}</p>
                             </div>
                             <dl>
                                 <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Детали</dt>
-                                <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">{data.description}</dd>
+                                <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">{description}</dd>
                             </dl>
                             <dl className="flex items-center space-x-6">
                                 <div>
                                     <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Категория</dt>
-                                    <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">{data.type}</dd>
+                                    <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">{type}</dd>
                                 </div>
                             </dl>
-                            <AddToBasketButton product={data}/>
+                            <AddToBasketButton product={data} condition={Boolean(!kol || kol <= 0)}/>
                         </div>
                     </section>
-                    <Comments/>
+                    <Comments productId={_id}/>
                 </>
                 : <h2>Ошибка. Такой продукт не найден</h2>
             }
