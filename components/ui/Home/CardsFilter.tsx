@@ -1,7 +1,7 @@
 import {IProduct, TypeDataFilters} from "@/services/products/products.interface";
 import {groupCategories} from "@/utils/groupCategories";
-import {classNames} from "@/utils/classNames";
 import {ChangeEvent, FC, useState} from "react";
+import {classNames} from "@/utils/classNames";
 
 interface ICardsFilter {
     products: IProduct[],
@@ -21,23 +21,23 @@ export const CardsFilter: FC<ICardsFilter> = ({
     const [dropdown, setDropdown] = useState<boolean>(false)
     const categories = groupCategories(products)
 
-
     return (
         <>
-            {/*При большом окне*/}
             <div className={"text-center mt-2"}>
+                {/*Кнопка. При маленьком окне*/}
                 <button id="dropdown-button" data-dropdown-toggle="dropdown"
                         type="button"
                         className="block md:hidden inline-flex items-center px-3 py-2 text-sm font-medium
                       text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4
                      focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700
-                     dark:focus:ring-blue-800 mb-2"
+                     dark:focus:ring-blue-800 mb-2 px-20"
                         onClick={() => setDropdown(!dropdown)}>
                     Фильтр
                 </button>
+                {/*Категории*/}
                 <div
                     className={classNames(dropdown ? "block" : "hidden", "z-10 p-2 bg-white rounded-lg shadow dark:bg-gray-700 text-center m-auto flex flex-row md:block justify-center mb-2")}>
-                    <div className={"mb-4 w-40"}>
+                    <div className={"mb-4 w-48"}>
                         <h6 className="mb-3 text-sm font-medium text-gray-900 dark:text-white">
                             Категории
                         </h6>
@@ -58,6 +58,7 @@ export const CardsFilter: FC<ICardsFilter> = ({
                             ))}
                         </ul>
                     </div>
+                    {/*Цена*/}
                     <div>
                         <h6 className="mb-3 text-sm font-medium text-gray-900 dark:text-white">
                             Цена

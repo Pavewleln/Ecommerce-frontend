@@ -8,12 +8,13 @@ import {Back} from "@/components/ui/Back";
 import Image from "next/image";
 
 export const getStaticProps = async (context: { params: { id: string; } }) => {
+
     const {data} = await ProductsService.getById(context.params.id);
 
     return {
         props: {
             data,
-        },
+        }
     };
 };
 
@@ -57,9 +58,8 @@ const Product = ({data}: { data: IProduct }) => {
         </MainLayout>
     )
 }
-export const getStaticPaths = async (context: { params: { id: string; }; }) => {
+export const getStaticPaths = async () => {
     const {data} = await ProductsService.getAll();
-
     const paths = data.map((item) => ({
         params: {id: item._id.toString()},
     }));

@@ -61,6 +61,7 @@ export const SearchProduct: FC<ISearchProduct> = ({search, handleSort, handleSea
     }
     return (
         <div className="flex m-2 mt-0">
+            {/*Кнопка*/}
             <button id="dropdown-button"
                     data-dropdown-toggle="dropdown"
                     className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4
@@ -83,6 +84,7 @@ export const SearchProduct: FC<ISearchProduct> = ({search, handleSort, handleSea
                     </svg>
                 }
             </button>
+            {/*Dropdown*/}
             <div id="dropdown"
                  className={classNames(dropdown ? "absolute" : "hidden", "z-20 w-32 p-3 bg-white rounded-lg shadow dark:bg-gray-700 mt-12")}>
                 <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
@@ -97,6 +99,7 @@ export const SearchProduct: FC<ISearchProduct> = ({search, handleSort, handleSea
                     ))}
                 </ul>
             </div>
+            {/*Поиск*/}
             <input
                 type="search"
                 id="search-dropdown"
