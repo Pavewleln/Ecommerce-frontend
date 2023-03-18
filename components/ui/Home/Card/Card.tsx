@@ -1,9 +1,9 @@
 import {AddToBasketButton} from "@/components/ui/Home/Card/AddToBasketButton";
 import {IProduct} from '@/services/products/products.interface';
+import {formatPrice} from "@/utils/formatPrice";
 import Image from "next/image";
 import {FC} from "react";
 import Link from "next/link";
-import {formatPrice} from "@/utils/formatPrice";
 
 export const Card: FC<{ product: IProduct }> = ({product}) => {
     const {_id, kol, description, price, title, imageUrl, type, seller} = product

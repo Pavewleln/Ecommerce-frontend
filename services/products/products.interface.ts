@@ -33,10 +33,12 @@ export interface ICreateProductResponse {
 }
 
 export type TypeDataFilters = {
-    sort?: EnumProductSort
-    searchItem?: string,
-    page?: string | number,
-    categories?: string[]
+    sort: EnumProductSort
+    searchItem: string,
+    page: string | number,
+    categories: string[],
+    fromPrice: string,
+    beforePrice: string
 }
 
 export enum EnumProductSort {

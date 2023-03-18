@@ -2,7 +2,7 @@ import {ICreateProductResponse, IProduct, TypeDataFilters} from "@/services/prod
 import {instance} from "@/api/api.interceptors";
 
 export const ProductsService = {
-    async getAll(queryData: TypeDataFilters = {}) {
+    async getAll(queryData: TypeDataFilters) {
         return await instance<IProduct[]>({
             url: 'products',
             method: 'GET',
