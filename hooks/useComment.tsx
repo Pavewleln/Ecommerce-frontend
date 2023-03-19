@@ -5,10 +5,27 @@ import {useAuth} from "@/hooks/useAuth";
 import {toast} from "react-toastify";
 import {FormEvent} from "react";
 
-export const useComment = ({productId, text, setText}: { productId: string, text: string, setText: any }) => {
+interface IUseComment {
+    productId: string,
+    text: string,
+    setText: any,
+    rating?: number,
+    setRating?: (rating: number) => void
+}
+
+export const useComment = ({
+                               productId,
+                               text,
+                               setText,
+                               rating,
+                               setRating
+                           }: IUseComment) => {
     const {user} = useAuth()
     const queryClient = useQueryClient()
-    const {data: comments, isLoading} = useQuery(['get all comments'], async () => await CommentsService.getAll(productId), {
+    const {
+        data: comments,
+        isLoading
+    } = useQuery(['get all comments'], async () => await CommentsService.getAll(productId), {
         select: ({data}) => data,
         staleTime: 12000
     })
@@ -22,15 +39,20 @@ export const useComment = ({productId, text, setText}: { productId: string, text
             if (user) {
                 const newComment = {
                     author: user?.name,
-                    text,
                     avatarUrl: user?.avatarUrl,
-                    product: productId
+                    product: productId,
+                    authorId: user._id,
+                    rating,
+                    text,
                 }
                 await createComment.mutate(newComment)
-                setText("")
             }
         } catch (err) {
             toast.error('Ошибка. Попробуйте позже')
+        }
+        setText("")
+        if (setRating) {
+            setRating(0.5)
         }
     }
     return {

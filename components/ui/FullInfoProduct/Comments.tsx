@@ -1,9 +1,11 @@
+import {CommentRating} from "@/components/ui/FullInfoProduct/CommentRating";
 import {Comment} from "@/components/ui/FullInfoProduct/Comment";
 import {useRestrictTyping} from "@/hooks/useRestrictTyping";
 import {useComment} from "@/hooks/useComment";
-import {FC} from "react";
+import {FC, useState} from "react";
 
 export const Comments: FC<{ productId: string }> = ({productId}) => {
+    const [rating, setRating] = useState(0.5)
     const {
         text,
         handleChangeTextarea,
@@ -12,7 +14,7 @@ export const Comments: FC<{ productId: string }> = ({productId}) => {
         progress,
         setText
     } = useRestrictTyping(150)
-    const {isLoading, comments, onSubmit} = useComment({text, setText, productId})
+    const {isLoading, comments, onSubmit} = useComment({text, setText, productId, rating, setRating})
     return !isLoading ? (
         <section className="bg-white dark:bg-gray-900 py-8 lg:py-16">
             <div className="max-w-2xl mx-auto px-4">
@@ -30,6 +32,10 @@ export const Comments: FC<{ productId: string }> = ({productId}) => {
                                   value={text}
                                   onChange={(event) => handleChangeTextarea(event)}
                         />
+                        <div className={"flex items-center"}>
+                            <p className={"font-semibold leading-none text-gray-900 dark:text-white"}>Оценка:</p>
+                            <CommentRating action={true} rating={rating} setRating={setRating}/>
+                        </div>
                     </div>
                     <div className="flex items-center">
                         <button type="submit"
@@ -56,12 +62,14 @@ export const Comments: FC<{ productId: string }> = ({productId}) => {
                     </div>
                     {progress()}
                 </form>
-                {comments && comments.length
-                    ? comments.map((comment) => (
-                        <Comment comment={comment} key={comment._id}/>
-                    ))
-                    : <h2>Нет комментариев</h2>
-                }
+                <div className={"max-h-[400px] overflow-y-auto"}>
+                    {comments && comments.length
+                        ? comments.map((comment) => (
+                            <Comment comment={comment} key={comment._id}/>
+                        ))
+                        : <h2 className={"text-center text-gray-300 mt-20"}>Нет комментариев</h2>
+                    }
+                </div>
             </div>
         </section>
     ) : (

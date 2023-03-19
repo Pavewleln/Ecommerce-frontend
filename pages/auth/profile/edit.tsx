@@ -4,7 +4,7 @@ import {SubmitHandler, useForm, useFormState} from "react-hook-form";
 import {TextField} from "@/components/ui/Form-components/TextField";
 import {IUpdateResponse} from "@/store/user/user.interface";
 import {MainLayout} from "@/components/layouts/MainLayout";
-import {update} from "@/store/user/user.actions";
+import {useActions} from "@/hooks/useActions";
 import {Back} from "@/components/ui/Back";
 import {useAuth} from "@/hooks/useAuth";
 import {toast} from "react-toastify";
@@ -13,6 +13,7 @@ import Image from "next/image";
 import axios from "axios";
 
 const Edit = () => {
+    const {update} = useActions()
     const {user, isLoading} = useAuth()
     const [imageUrl, setImageUrl] = useState<string | undefined>(user?.avatarUrl);
 
@@ -33,10 +34,11 @@ const Edit = () => {
         formState: {isValid}
     } = useForm<IUpdateResponse>({
         defaultValues: {
-            name: user?.name,
-            surname: user?.surname,
-            phone: user?.phone,
-            email: user?.email
+            id: user?._id,
+            name: user?.name ?? "",
+            surname: user?.surname ?? "",
+            phone: user?.phone ?? "",
+            email: user?.email ?? ""
         },
         mode: "onChange"
     });
@@ -45,11 +47,10 @@ const Edit = () => {
         control
     })
 
-    const onSubmit: SubmitHandler<IUpdateResponse> = async ({name, surname, email, phone}) => {
+    const onSubmit: SubmitHandler<IUpdateResponse> = async (updateData) => {
         try {
-            const data = {name, surname, email, phone, avatarUrl: imageUrl}
-            await update(data)
-            // toast.success("Профиль успешно обновлен");
+            await update({...updateData, avatarUrl: imageUrl})
+            toast.success("Профиль успешно обновлен")
         } catch (err) {
             toast.error("Ошибка. Попробуйте позже")
         }
@@ -78,6 +79,7 @@ const Edit = () => {
                                     <div
                                         className={"inline-flex items-center justify-center w-36 h-36 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 hover:bg-gray-300 transition-all"}>
                                         <Image loader={() => `${process.env.SERVER_URL}${imageUrl}`}
+                                               unoptimized={true}
                                                className="rounded w-36 h-36"
                                                src={`${process.env.SERVER_URL}${imageUrl}`}
                                                alt="Extra large avatar"

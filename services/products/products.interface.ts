@@ -14,7 +14,9 @@ export interface IProduct {
     // Тип товара(По этому типу будет фильтрация)
     type: string,
     // id покупателя
-    seller: string
+    seller: string,
+    // Рейтинг
+    rating: number
 }
 
 export interface ICreateProductResponse {

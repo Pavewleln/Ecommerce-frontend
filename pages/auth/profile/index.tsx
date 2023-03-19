@@ -22,10 +22,12 @@ const Profile = () => {
                     {user?.avatarUrl
                         ? <label
                             className="relative inline-flex items-center justify-center w-36 h-36 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 hover:bg-gray-300 transition-all">
-                            <Image className="rounded w-36 h-36"
-                                 src={`${process.env.SERVER_URL}${user?.avatarUrl}`}
-                                 alt="Extra large avatar"
-                            width={100} height={100}/>
+                            <Image loader={() => `${process.env.SERVER_URL}${user.avatarUrl}`}
+                                   unoptimized={true}
+                                   className="rounded w-36 h-36"
+                                   src={`${process.env.SERVER_URL}${user.avatarUrl}`}
+                                   alt="Extra large avatar"
+                                   width={100} height={100}/>
                         </label>
                         : <label
                             className="relative inline-flex items-center justify-center w-36 h-36 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">

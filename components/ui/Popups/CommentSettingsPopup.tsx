@@ -1,25 +1,37 @@
+import {CommentsService} from "@/services/comments/comments.service";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {IPopup} from "@/components/ui/Popups/popup.types";
 import {classNames} from "@/utils/classNames";
+import {toast} from "react-toastify";
 import {FC} from "react";
 
 export const CommentSettingsPopup: FC<IPopup> = ({showModal, setShowModal, comment}) => {
-
+    const queryClient = useQueryClient()
+    const deleteComment = useMutation((id: string) => CommentsService.delete(id), {
+        onSuccess: () => queryClient.invalidateQueries(['get all comments'])
+    })
+    const onDeleteCommentSubmit = async () => {
+        try {
+            await deleteComment.mutate(comment._id)
+            toast.success("Комментарий успешно удален")
+        } catch (err) {
+            toast.error('Ошибка. Попробуйте позже')
+        }
+    }
     return (
         <div id="dropdownComment"
-             className={classNames(showModal ? "absolute" : "hidden", "z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600")}>
+             className={classNames(showModal ? "absolute" : "hidden", "z-10 w-28 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 right-20")}>
             <ul className="py-1 text-sm text-gray-700 dark:text-gray-200"
                 aria-labelledby="dropdownMenuIconHorizontalButton">
                 <li>
-                    <a href="#"
-                       className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                    <button
+                        className="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full text-left">Изменить
+                    </button>
                 </li>
                 <li>
-                    <a href="#"
-                       className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Remove</a>
-                </li>
-                <li>
-                    <a href="#"
-                       className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Report</a>
+                    <button onClick={() => onDeleteCommentSubmit()}
+                            className="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full text-left">Удалить
+                    </button>
                 </li>
             </ul>
         </div>
