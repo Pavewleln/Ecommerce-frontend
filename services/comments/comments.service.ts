@@ -1,5 +1,5 @@
-import {instance} from "@/api/api.interceptors";
 import {IComment, ICreateCommentResponse} from "./comments.interface";
+import {instance} from "@/api/api.interceptors";
 export const CommentsService = {
     async getAll(productId: string) {
         return await instance<IComment[]>({
