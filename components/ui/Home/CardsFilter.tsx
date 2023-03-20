@@ -7,7 +7,7 @@ import { ChangeEvent, FC, useState } from "react";
 import { classNames } from "@/utils/classNames";
 
 interface ICardsFilter {
-    products: IProduct[];
+    products?: IProduct[];
     search: TypeDataFilters;
     handleFromPrice: (event: ChangeEvent<HTMLInputElement>) => void;
     handleBeforePrice: (event: ChangeEvent<HTMLInputElement>) => void;

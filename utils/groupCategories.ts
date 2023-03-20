@@ -1,13 +1,12 @@
 import { IProduct } from "@/services/products/products.interface";
-import { useMemo } from "react";
 
-export const groupCategories = (cards: IProduct[]) =>
-    useMemo(() => {
+export const groupCategories = (products?: IProduct[]) => {
+    if (products) {
         // Создаем массив, где будем потом хранить данные
         const categories: Array<{ label: string; matches: number }> = [];
         // Объект для подсчета
         let sortCategories: { [key: string]: number } = {};
-        for (let card of cards) {
+        for (let card of products) {
             // Если такого ключа нет в объекте, то добавлем со значением 1
             if (sortCategories[card.type.toLowerCase()] === undefined) {
                 sortCategories[card.type.toLowerCase()] = 1;
@@ -21,4 +20,7 @@ export const groupCategories = (cards: IProduct[]) =>
             categories.push({ label: key, matches: sortCategories[key] });
         }
         return categories;
-    }, cards);
+    } else {
+        return [];
+    }
+};

@@ -88,6 +88,7 @@ export const useSearch = () => {
         handleFromPrice,
         handleChangeCategories,
         handleSort,
-        handleSearch
+        handleSearch,
+        setSearch
     };
 };
