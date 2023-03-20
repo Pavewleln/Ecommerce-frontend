@@ -1,7 +1,3 @@
 export const CommentsSkeleton = () => {
-    return (
-        <div>
-            CommentsSkeleton
-        </div>
-    )
-}
+    return <div>CommentsSkeleton</div>;
+};

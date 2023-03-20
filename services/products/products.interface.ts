@@ -1,51 +1,51 @@
 export interface IProduct {
     // id
-    _id: string,
+    _id: string;
     // Имя
-    title: string,
+    title: string;
     // Цена
-    price: number,
+    price: number;
     // Количество на складе
-    kol: number,
+    kol: number;
     // Описание
-    description: string,
+    description: string;
     // Картинка
-    imageUrl: string,
+    images: string[];
     // Тип товара(По этому типу будет фильтрация)
-    type: string,
+    type: string;
     // id покупателя
-    seller: string,
+    seller: string;
     // Рейтинг
-    rating: number
+    rating: number;
 }
 
 export interface ICreateProductResponse {
     // Имя
-    title: string,
+    title: string;
     // Цена
-    price: number,
+    price: number;
     // Количество на складе
-    kol: number,
+    kol: number;
     // Описание
-    description: string,
+    description: string;
     // Картинка
-    imageUrl: string,
+    imageUrl: string;
     // Тип товара(По этому типу будет фильтрация)
-    type: string
+    type: string;
 }
 
 export type TypeDataFilters = {
-    sort: EnumProductSort
-    searchItem: string,
-    page: string | number,
-    categories: string[],
-    fromPrice: string,
-    beforePrice: string
-}
+    sort: EnumProductSort;
+    searchItem: string;
+    page: string | number;
+    categories: string[];
+    fromPrice: string;
+    beforePrice: string;
+};
 
 export enum EnumProductSort {
-    HIGH_PRICE = 'high-price',
-    LOW_PRICE = 'low-price',
-    NEWEST = 'newest',
-    OLDEST = 'oldest'
+    HIGH_PRICE = "high-price",
+    LOW_PRICE = "low-price",
+    NEWEST = "newest",
+    OLDEST = "oldest"
 }

@@ -1,3 +1,3 @@
-import {useAppSelector} from "@/hooks/useAppSelector";
+import { useAppSelector } from "@/hooks/useAppSelector";
 
-export const useBasket = () => useAppSelector(state => state.basket)
+export const useBasket = () => useAppSelector(state => state.basket);
