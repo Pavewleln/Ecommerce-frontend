@@ -6,13 +6,15 @@ import {IUpdateResponse} from "@/store/user/user.interface";
 import {MainLayout} from "@/components/layouts/MainLayout";
 import {useActions} from "@/hooks/useActions";
 import {Back} from "@/components/ui/Back";
+import {useEffect, useState} from "react";
 import {useAuth} from "@/hooks/useAuth";
+import {useRouter} from "next/router";
 import {toast} from "react-toastify";
-import {useState} from "react";
 import Image from "next/image";
 import axios from "axios";
 
 const Edit = () => {
+    const {back} = useRouter()
     const {update} = useActions()
     const {user, isLoading} = useAuth()
     const [imageUrl, setImageUrl] = useState<string | undefined>(user?.avatarUrl);
@@ -51,6 +53,7 @@ const Edit = () => {
         try {
             await update({...updateData, avatarUrl: imageUrl})
             toast.success("Профиль успешно обновлен")
+            back()
         } catch (err) {
             toast.error("Ошибка. Попробуйте позже")
         }

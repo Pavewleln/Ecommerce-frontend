@@ -4,5 +4,5 @@ import {IComment} from "@/services/comments/comments.interface";
 export interface IPopup {
     showModal: boolean,
     setShowModal: (showModal: boolean) => void;
-    comment: IComment
+    comment?: IComment
 }

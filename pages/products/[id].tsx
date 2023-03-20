@@ -30,7 +30,7 @@ const Product = ({data}: { data: IProduct }) => {
                             ? <Image src={imageUrl} alt={"Product"} width={400} height={400}
                                      className={"m-5"}/>
                             : <div
-                                className={"m-5 w-full max-w-[500px] min-w-[300px] md:min-w-[350px] min-h-[300px] h-max sm:h-[300px] md:h-[400px] bg-gray-100 rounded-2xl flex items-center justify-center text-gray-400"}>Нет
+                                className={"m-5 w-full max-w-[500px] min-w-[300px] md:min-w-[350px] min-h-[300px] h-max sm:h-[300px] md:h-[400px] bg-gray-100 rounded-2xl flex items-center justify-center text-gray-400 dark:bg-gray-600"}>Нет
                                 фото</div>
                         }
                         <div className="max-w-xl lg:py-16">

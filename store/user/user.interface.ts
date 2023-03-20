@@ -6,7 +6,10 @@ export interface IUser {
     surname: string,
     avatarUrl: string,
     phone: string,
-    isAdmin: boolean
+    isAdmin: boolean,
+    activationLink: string
+    favourites?: string[]
+    isActivated: boolean
 }
 
 // Типы для входа

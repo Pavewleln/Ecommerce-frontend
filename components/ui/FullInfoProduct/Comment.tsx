@@ -28,7 +28,7 @@ export const Comment: FC<{ comment: IComment }> = ({comment}) => {
                                 width={30}
                                 height={30}
                             />
-                            : <p className="mr-2 w-6 h-6 rounded-full bg-gray-200"></p>
+                            : <p className="mr-2 w-6 h-6 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center">{author.slice(0, 1)}</p>
                         }
                         {author}
                     </div>
