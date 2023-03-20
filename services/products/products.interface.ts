@@ -14,7 +14,9 @@ export interface IProduct {
     // Тип товара(По этому типу будет фильтрация)
     type: string,
     // id покупателя
-    seller: string
+    seller: string,
+    // Рейтинг
+    rating: number
 }
 
 export interface ICreateProductResponse {
@@ -33,10 +35,12 @@ export interface ICreateProductResponse {
 }
 
 export type TypeDataFilters = {
-    sort?: EnumProductSort
-    searchItem?: string,
-    page?: string | number,
-    categories?: string[]
+    sort: EnumProductSort
+    searchItem: string,
+    page: string | number,
+    categories: string[],
+    fromPrice: string,
+    beforePrice: string
 }
 
 export enum EnumProductSort {

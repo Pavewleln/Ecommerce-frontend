@@ -33,7 +33,6 @@ export const AuthService = {
                 data
             }
         )
-        console.log(response.data) // добавить вывод в консоль
         if (response.data.accessToken) saveTokensStorage(response.data)
         return response.data
     },

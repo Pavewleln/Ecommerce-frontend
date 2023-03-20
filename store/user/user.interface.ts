@@ -6,7 +6,10 @@ export interface IUser {
     surname: string,
     avatarUrl: string,
     phone: string,
-    isAdmin: boolean
+    isAdmin: boolean,
+    activationLink: string
+    favourites?: string[]
+    isActivated: boolean
 }
 
 // Типы для входа
@@ -28,11 +31,12 @@ export interface ISignUpResponse {
 
 // Типы для изменения данных
 export interface IUpdateResponse {
-    name?: string,
-    surname?: string,
-    phone?: string,
+    id: string,
+    name: string,
+    surname: string,
+    phone: string,
     avatarUrl?: string,
-    email?: string
+    email: string
 }
 
 // Виды токена

@@ -40,9 +40,13 @@ export const BasketPopup: FC<IPopup> = ({showModal, setShowModal}) => {
                                     <div className={"max-h-[300px] overflow-x-auto"}>
                                         {items.map(({product, price, quantity, _id}) => (
                                             <div key={_id} className={"m-2 flex items-center"}>
-                                                <Image src={product.imageUrl} alt={product.title} width={80}
-                                                       height={80}
-                                                       className={"m-2"}/>
+
+                                                {product.imageUrl
+                                                    ? <Image src={product.imageUrl} alt={product.title} width={80}
+                                                             height={80}
+                                                             className={"m-2"}/>
+                                                    :<div className={"rounded-lg p-2 w-[80px h-[80px] bg-gray-100 flex items-center justify-center filter text-gray-400"}>нет фото</div>
+                                                }
                                                 <div className={"m-2"}>
                                                     <h5 className={"font-bold "}>{product.title}</h5>
                                                     <h6>{formatPrice(price)}</h6>

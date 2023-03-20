@@ -54,9 +54,15 @@ const UserSlice = createSlice({
                 state.user = null
             })
             // Проверка подлинности refresh и получение обновленных данных о пользователе
+            .addCase(checkAuth.pending, state => {
+                state.isLoading = true
+            })
             .addCase(checkAuth.fulfilled, (state, {payload}) => {
                 state.isLoading = false
                 state.user = payload.user
+            })
+            .addCase(checkAuth.rejected, state => {
+                state.isLoading = false
             })
     }
 })

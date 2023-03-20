@@ -21,7 +21,6 @@ export const register = createAsyncThunk<IAuthResponse, ISignUpResponse>(
 export const update = createAsyncThunk<IAuthResponse, IUpdateResponse>(
     'auth/update',
     async (data, thunkApi) => {
-        console.log("updateProfile")
         try {
             return await AuthService.update(data)
         } catch (err) {

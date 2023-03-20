@@ -1,8 +1,19 @@
-import {ICreateProductResponse, IProduct, TypeDataFilters} from "@/services/products/products.interface";
+import {
+    EnumProductSort,
+    ICreateProductResponse,
+    IProduct,
+    TypeDataFilters
+} from "@/services/products/products.interface";
 import {instance} from "@/api/api.interceptors";
-
 export const ProductsService = {
-    async getAll(queryData: TypeDataFilters = {}) {
+    async getAll(queryData: TypeDataFilters = {
+        sort: EnumProductSort.NEWEST,
+        searchItem: "",
+        page: "1",
+        categories: [],
+        fromPrice: '0',
+        beforePrice: '0'
+    }) {
         return await instance<IProduct[]>({
             url: 'products',
             method: 'GET',
