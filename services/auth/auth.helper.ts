@@ -1,4 +1,4 @@
-import { ITokens, Tokens } from "@/store/user/user.interface";
+import { IAuthResponse, ITokens, Tokens } from "@/store/user/user.interface";
 import Cookies from "js-cookie";
 
 // получить access токен

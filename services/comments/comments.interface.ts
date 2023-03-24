@@ -15,5 +15,4 @@ export interface ICreateCommentResponse {
     author: string;
     product: string;
     rating?: number;
-    authorId: string;
 }

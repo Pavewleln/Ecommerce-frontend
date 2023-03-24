@@ -1,5 +1,5 @@
-import { Controller } from "react-hook-form";
 import { FC, useCallback, useState } from "react";
+import { Controller } from "react-hook-form";
 
 interface ITextField {
     id: string;
@@ -32,10 +32,7 @@ export const TextField: FC<ITextField> = ({
     }, []);
     return (
         <div className={"m-2"}>
-            <label
-                htmlFor="phone"
-                className="block text-sm font-medium text-gray-900 dark:text-white"
-            >
+            <label className="block text-sm font-medium text-gray-900 dark:text-white">
                 {label}
             </label>
             <div className={"text-center"}>

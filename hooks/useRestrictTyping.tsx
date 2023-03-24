@@ -9,7 +9,7 @@ export const useRestrictTyping = (max: number) => {
             setText(e.currentTarget.value);
         }
     };
-    const handleClickAddTweet = (): void => {
+    const handleClickClearText = (): void => {
         setText("");
     };
     const disabledButtonCondition = Boolean(
@@ -19,7 +19,7 @@ export const useRestrictTyping = (max: number) => {
         text,
         setText,
         handleChangeTextarea,
-        handleClickAddTweet,
+        handleClickClearText,
         textLimitPercent,
         disabledButtonCondition
     };

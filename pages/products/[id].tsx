@@ -7,6 +7,7 @@ import { formatPrice } from "@/utils/formatPrice";
 import { classNames } from "@/utils/classNames";
 import { Back } from "@/components/ui/Back";
 import Image from "next/image";
+import { useState } from "react";
 
 export const getStaticProps = async (context: { params: { id: string } }) => {
     const { data } = await ProductsService.getById(context.params.id);
@@ -18,6 +19,12 @@ export const getStaticProps = async (context: { params: { id: string } }) => {
 };
 
 const Product = ({ data }: { data: IProduct }) => {
+    const [tab, setTab] = useState(0);
+
+    const isActive = (index: number) => {
+        if (tab === index) return " active";
+        return "";
+    };
     const { kol, description, price, title, images, type, _id } = data;
     return (
         <MainLayout title={data ? data.title : ""}>
@@ -26,15 +33,35 @@ const Product = ({ data }: { data: IProduct }) => {
                 <>
                     <section className="mx-auto bg-white dark:bg-gray-900 flex items-center justify-around flex-col md:flex-row p-2">
                         {images.length ? (
-                            <Image
-                                src={images[0]}
-                                alt={"Product"}
-                                width={400}
-                                height={400}
-                                className={
-                                    "m-5 max-w-[500px] min-h-[250px] h-max md:max-h-[400px] w-auto"
-                                }
-                            />
+                            <div className={"m-10"}>
+                                <Image
+                                    loader={() => images[tab]}
+                                    src={images[tab]}
+                                    alt={"Product"}
+                                    width={400}
+                                    height={400}
+                                    className={"m-5 max-w-[250px] h-auto"}
+                                />
+                                {images.length > 1 && (
+                                    <div className="flex items-center">
+                                        {images.map((img, index) => (
+                                            <Image
+                                                loader={() => img}
+                                                key={index}
+                                                src={img}
+                                                alt={img}
+                                                className={classNames(
+                                                    "img-thumbnail rounded-lg border p-2 w-24 h-24 mx-1 cursor-pointer",
+                                                    isActive(index)
+                                                )}
+                                                height={20}
+                                                width={20}
+                                                onClick={() => setTab(index)}
+                                            />
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
                         ) : (
                             <div
                                 className={
@@ -44,7 +71,7 @@ const Product = ({ data }: { data: IProduct }) => {
                                 Нет фото
                             </div>
                         )}
-                        <div className="max-w-xl lg:py-16">
+                        <div className="lg:py-16 w-full max-w-lg">
                             <h2 className="mb-2 text-xl font-semibold leading-none text-gray-900 md:text-2xl dark:text-white">
                                 {title}
                             </h2>

@@ -29,7 +29,7 @@ export interface ICreateProductResponse {
     // Описание
     description: string;
     // Картинка
-    imageUrl: string;
+    images: string[];
     // Тип товара(По этому типу будет фильтрация)
     type: string;
 }

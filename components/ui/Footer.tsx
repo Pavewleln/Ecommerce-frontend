@@ -16,21 +16,13 @@ export const Footer = () => {
     return (
         <footer className="p-4 bg-white rounded-lg flex-col-reverse shadow flex items-center justify-between p-6 dark:bg-gray-800 sm:flex-row mt-10">
             <span className="text-sm text-gray-500 text-center dark:text-gray-400 m-2">
-                © 2023 |{" "}
+                © 2023{" "}
                 <a
                     target={"_blank"}
                     href="https://github.com/Pavewleln"
                     className="hover:underline"
                 >
                     Pavel Kulikov
-                </a>{" "}
-                |{" "}
-                <a
-                    target={"_blank"}
-                    href="https://github.com/skwize"
-                    className="hover:underline"
-                >
-                    Kirill Lopatin
                 </a>
             </span>
             <ul className="flex flex-wrap items-center justify-center mb-3 text-sm text-gray-500 dark:text-gray-400 sm:mb-0">

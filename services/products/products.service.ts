@@ -1,10 +1,10 @@
+import { instance } from "@/api/api.interceptors";
 import {
     EnumProductSort,
     ICreateProductResponse,
     IProduct,
     TypeDataFilters
 } from "@/services/products/products.interface";
-import { instance } from "@/api/api.interceptors";
 export const ProductsService = {
     async getAll(
         queryData: TypeDataFilters = {
@@ -46,6 +46,12 @@ export const ProductsService = {
         return await instance<IProduct>({
             url: `products/${id}`,
             method: "DELETE"
+        });
+    },
+    async myProducts() {
+        return await instance<IProduct[]>({
+            url: `products/all/my`,
+            method: "GET"
         });
     }
 };

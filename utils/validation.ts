@@ -52,3 +52,57 @@ export const surnameValidation = {
         return true;
     }
 };
+export const titleValidation = {
+    required: REQUIRED_FIELD,
+    validate: (value: string) => {
+        if (value.length > 15) {
+            return "Название должно быть короче 20 символов";
+        }
+        if (value.length < 3) {
+            return "Название должно быть длинее 3 символов";
+        }
+        return true;
+    }
+};
+export const typeValidation = {
+    required: REQUIRED_FIELD,
+    validate: (value: string) => {
+        if (value.length > 15) {
+            return "Название должно быть короче 20 символов";
+        }
+        if (value.length < 3) {
+            return "Название должно быть длинее 3 символов";
+        }
+        return true;
+    }
+};
+export const descriptionValidation = {
+    required: REQUIRED_FIELD,
+    validate: (value: string) => {
+        if (value.length < 10) {
+            return "Название должно быть длинее 10 символов";
+        }
+        // if (value.length > 150) {
+        //     return "Название должно быть короче 150 символов";
+        // }
+        return true;
+    }
+};
+export const priceValidation = {
+    required: REQUIRED_FIELD,
+    validate: (value: number) => {
+        if (value <= 0) {
+            return "Цена не может равняться 0";
+        }
+        return true;
+    }
+};
+export const kolValidation = {
+    required: REQUIRED_FIELD,
+    validate: (value: number) => {
+        if (value <= 0) {
+            return "Количество не может равняться 0";
+        }
+        return true;
+    }
+};

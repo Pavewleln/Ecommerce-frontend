@@ -6,11 +6,11 @@ import { LogoutPopup } from "./Popups/LogoutPopup";
 import { classNames } from "@/utils/classNames";
 import { FC, Fragment, useState } from "react";
 import { useBasket } from "@/hooks/useBasket";
+import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/router";
 import { useTheme } from "next-themes";
-import Link from "next/link";
 import Image from "next/image";
-import { useAuth } from "@/hooks/useAuth";
+import Link from "next/link";
 
 // Для темы
 enum Theme {
@@ -92,22 +92,22 @@ export const Header: FC = () => {
                                         className="relative ml-3 z-50"
                                     >
                                         <div className={"flex items-center"}>
-                                            <Link href={"/products/favourites"}>
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    strokeWidth="1.5"
-                                                    stroke="currentColor"
-                                                    className="mr-5 w-7 h-7 text-white cursor-pointer hover:text-blue-200 transition-all"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                                                    />
-                                                </svg>
-                                            </Link>
+                                            {/*<Link href={"/products/favourites"}>*/}
+                                            {/*    <svg*/}
+                                            {/*        xmlns="http://www.w3.org/2000/svg"*/}
+                                            {/*        fill="none"*/}
+                                            {/*        viewBox="0 0 24 24"*/}
+                                            {/*        strokeWidth="1.5"*/}
+                                            {/*        stroke="currentColor"*/}
+                                            {/*        className="mr-5 w-7 h-7 text-white cursor-pointer hover:text-blue-200 transition-all"*/}
+                                            {/*    >*/}
+                                            {/*        <path*/}
+                                            {/*            strokeLinecap="round"*/}
+                                            {/*            strokeLinejoin="round"*/}
+                                            {/*            d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"*/}
+                                            {/*        />*/}
+                                            {/*    </svg>*/}
+                                            {/*</Link>*/}
                                             <button
                                                 onClick={() =>
                                                     setShowBasketModal(
@@ -140,11 +140,11 @@ export const Header: FC = () => {
                                                 {user?.avatarUrl ? (
                                                     <Image
                                                         loader={() =>
-                                                            `${process.env.SERVER_URL}${user.avatarUrl}`
+                                                            user.avatarUrl
                                                         }
                                                         unoptimized={true}
                                                         className="rounded-3xl w-10 h-10"
-                                                        src={`${process.env.SERVER_URL}${user.avatarUrl}`}
+                                                        src={user.avatarUrl}
                                                         alt="Extra large avatar"
                                                         width={10}
                                                         height={10}
@@ -208,6 +208,35 @@ export const Header: FC = () => {
                                                         Профиль
                                                     </Link>
                                                 </Menu.Item>
+                                                {user?.isAdmin && (
+                                                    <>
+                                                        <Menu.Item>
+                                                            <Link
+                                                                href={
+                                                                    "/products/create"
+                                                                }
+                                                                className={
+                                                                    "block px-4 py-2 text-sm text-gray-700"
+                                                                }
+                                                            >
+                                                                Создать свой
+                                                                продукт
+                                                            </Link>
+                                                        </Menu.Item>
+                                                        <Menu.Item>
+                                                            <Link
+                                                                href={
+                                                                    "/products/my"
+                                                                }
+                                                                className={
+                                                                    "block px-4 py-2 text-sm text-gray-700"
+                                                                }
+                                                            >
+                                                                Свои продукты
+                                                            </Link>
+                                                        </Menu.Item>
+                                                    </>
+                                                )}
                                                 <Menu.Item>
                                                     <button
                                                         onClick={() =>

@@ -1,21 +1,22 @@
-import { formatPrice } from "@/utils/formatPrice";
-import { useActions } from "@/hooks/useActions";
-import { useBasket } from "@/hooks/useBasket";
+import {formatPrice} from "@/utils/formatPrice";
+import {useActions} from "@/hooks/useActions";
+import {useBasket} from "@/hooks/useBasket";
 import Image from "next/image";
-import { FC } from "react";
+import {FC} from "react";
+import Link from "next/link";
 
 interface IBasketPopup {
     showModal: boolean;
     setShowModal: (showModal: boolean) => void;
 }
 
-export const BasketPopup: FC<IBasketPopup> = ({ showModal, setShowModal }) => {
-    const { items } = useBasket();
+export const BasketPopup: FC<IBasketPopup> = ({showModal, setShowModal}) => {
+    const {items} = useBasket();
     const total = items.reduce(
         (acc, item) => acc + item.product.price * item.quantity,
         0
     );
-    const { changeQuantity, removeFromBasket, reset } = useActions();
+    const {changeQuantity, removeFromBasket, reset} = useActions();
     return showModal ? (
         <>
             <div className="absolute z-30 right-5 lg:right-32">
@@ -24,15 +25,14 @@ export const BasketPopup: FC<IBasketPopup> = ({ showModal, setShowModal }) => {
                     onClick={() => setShowModal(false)}
                 ></div>
                 <div className="min-h-screen px-4 py-8">
-                    <div className="relative w-full max-w-lg p-4 mx-auto bg-white rounded-md shadow-lg dark:bg-gray-700 min-w-[250px] min-h-[150px]">
+                    <div
+                        className="relative w-full max-w-lg p-4 mx-auto bg-white rounded-md shadow-lg dark:bg-gray-700 min-w-[250px] min-h-[150px]">
                         <div className="flex items-center justify-between">
                             <h5>Моя корзина</h5>
                             {items.length ? (
                                 <button
                                     onClick={() => reset()}
-                                    className={
-                                        "rounded-xl cursor-pointer hover:bg-gray-100 transition-all dark:hover:bg-gray-800 p-1"
-                                    }
+                                    className={"rounded-xl cursor-pointer hover:bg-gray-100 transition-all dark:hover:bg-gray-800 p-1"}
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +51,7 @@ export const BasketPopup: FC<IBasketPopup> = ({ showModal, setShowModal }) => {
                                 </button>
                             ) : null}
                         </div>
-                        <hr />
+                        <hr/>
                         <div>
                             {items.length ? (
                                 <div>
@@ -62,23 +62,20 @@ export const BasketPopup: FC<IBasketPopup> = ({ showModal, setShowModal }) => {
                                     >
                                         {items.map(
                                             ({
-                                                product,
-                                                price,
-                                                quantity,
-                                                _id
-                                            }) => (
-                                                <div
+                                                 product,
+                                                 price,
+                                                 quantity,
+                                                 _id
+                                             }) => (
+                                                <Link
+                                                    href={`/products/${_id}`}
                                                     key={_id}
-                                                    className={
-                                                        "m-2 flex items-center"
-                                                    }
+                                                    className={"m-2 flex items-center"}
                                                 >
-                                                    {product.images ? (
+                                                    {product.images.length ? (
                                                         <Image
-                                                            src={
-                                                                product
-                                                                    .images[0]
-                                                            }
+                                                            loader={() => product.images[0]}
+                                                            src={product.images[0]}
                                                             alt={product.title}
                                                             width={80}
                                                             height={80}
@@ -194,7 +191,7 @@ export const BasketPopup: FC<IBasketPopup> = ({ showModal, setShowModal }) => {
                                                             </button>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </Link>
                                             )
                                         )}
                                     </div>

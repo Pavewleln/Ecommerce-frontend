@@ -26,7 +26,7 @@ export const CardsFilter: FC<ICardsFilter> = ({
 
     return (
         <>
-            <div className={"text-center mt-2"}>
+            <div className={"mt-2"}>
                 {/*Кнопка. При маленьком окне*/}
                 <button
                     id="dropdown-button"
@@ -35,7 +35,7 @@ export const CardsFilter: FC<ICardsFilter> = ({
                     className="block md:hidden inline-flex items-center px-3 py-2 text-sm font-medium
                       text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4
                      focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700
-                     dark:focus:ring-blue-800 mb-2 px-20"
+                     dark:focus:ring-blue-800 mb-2 px-20 m-auto"
                     onClick={() => setDropdown(!dropdown)}
                 >
                     Фильтр
@@ -44,15 +44,15 @@ export const CardsFilter: FC<ICardsFilter> = ({
                 <div
                     className={classNames(
                         dropdown ? "block" : "hidden",
-                        "z-10 p-2 bg-white rounded-lg shadow dark:bg-gray-700 text-center m-auto flex flex-row md:block justify-center mb-2"
+                        "z-10 p-2 bg-white rounded-lg shadow dark:bg-gray-700 m-auto flex flex-row md:block justify-center mb-2"
                     )}
                 >
-                    <div className={"mb-4 w-48"}>
+                    <div className={"mb-4 w-40"}>
                         <h6 className="mb-3 text-sm font-medium text-gray-900 dark:text-white">
                             Категории
                         </h6>
                         <ul
-                            className="space-y-2 text-sm "
+                            className="space-y-2 text-sm"
                             aria-labelledby="dropdownDefault"
                         >
                             {categories.map((category, index) => (

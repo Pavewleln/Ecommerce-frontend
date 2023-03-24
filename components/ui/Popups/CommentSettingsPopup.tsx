@@ -42,11 +42,6 @@ export const CommentSettingsPopup: FC<ICommentSettingsPopup> = ({
                 aria-labelledby="dropdownMenuIconHorizontalButton"
             >
                 <li>
-                    <button className="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full text-left">
-                        Изменить
-                    </button>
-                </li>
-                <li>
                     <button
                         onClick={() => onDeleteCommentSubmit()}
                         className="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full text-left"

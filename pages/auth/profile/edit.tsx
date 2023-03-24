@@ -8,9 +8,9 @@ import { SubmitHandler, useForm, useFormState } from "react-hook-form";
 import { TextField } from "@/components/ui/Form-components/TextField";
 import { IUpdateResponse } from "@/store/user/user.interface";
 import { MainLayout } from "@/components/layouts/MainLayout";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useActions } from "@/hooks/useActions";
 import { Back } from "@/components/ui/Back";
-import { ChangeEvent, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
@@ -29,12 +29,12 @@ const Edit = () => {
         try {
             if (event.target.files) {
                 const formData = new FormData();
-                formData.append("avatarUrl", event.target.files[0]);
+                formData.append("images", event.target.files[0]);
                 const { data } = await axios.post(
                     `${process.env.SERVER_URL}upload`,
                     formData
                 );
-                setImageUrl(data.url);
+                setImageUrl(`${process.env.SERVER_URL}${data.url}`);
             }
         } catch (err) {
             toast.error("Ошибка при загрузке файла");
@@ -44,6 +44,7 @@ const Edit = () => {
     const {
         handleSubmit,
         control,
+        reset,
         formState: { isValid }
     } = useForm<IUpdateResponse>({
         defaultValues: {
@@ -55,6 +56,17 @@ const Edit = () => {
         },
         mode: "onChange"
     });
+    useEffect(() => {
+        if (user) {
+            reset({
+                id: user?._id,
+                name: user?.name ?? "",
+                surname: user?.surname ?? "",
+                phone: user?.phone ?? "",
+                email: user?.email ?? ""
+            });
+        }
+    }, [user]);
 
     const { errors } = useFormState({
         control
@@ -91,7 +103,7 @@ const Edit = () => {
                                 <label className="cursor-pointer relative inline-flex items-center justify-center w-36 h-36 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 hover:bg-gray-300 transition-all">
                                     <input
                                         className={"hidden"}
-                                        id="avatarUrl"
+                                        id="images"
                                         type="file"
                                         onChange={e => handleChangeFile(e)}
                                     />
@@ -108,13 +120,11 @@ const Edit = () => {
                                         }
                                     >
                                         <Image
-                                            loader={() =>
-                                                `${process.env.SERVER_URL}${imageUrl}`
-                                            }
+                                            loader={() => imageUrl}
                                             unoptimized={true}
                                             className="rounded w-36 h-36"
-                                            src={`${process.env.SERVER_URL}${imageUrl}`}
-                                            alt="Extra large avatar"
+                                            src={imageUrl}
+                                            alt={imageUrl}
                                             width={100}
                                             height={100}
                                         />
