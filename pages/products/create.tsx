@@ -1,16 +1,16 @@
-import {ICreateProductResponse} from "@/services/products/products.interface";
-import {TextareaField} from "@/components/ui/Form-components/TextareaField";
-import {ButtonForm} from "@/components/ui/Form-components/ButtonForm";
-import {ProductsService} from "@/services/products/products.service";
-import {SubmitHandler, useForm, useFormState} from "react-hook-form";
-import {TextField} from "@/components/ui/Form-components/TextField";
-import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {MainLayout} from "@/components/layouts/MainLayout";
-import {ChangeEvent, useEffect, useState} from "react";
-import {Back} from "@/components/ui/Back";
-import {useAuth} from "@/hooks/useAuth";
-import {useRouter} from "next/router";
-import {toast} from "react-toastify";
+import { ICreateProductResponse } from "@/services/products/products.interface";
+import { TextareaField } from "@/components/ui/Form-components/TextareaField";
+import { ButtonForm } from "@/components/ui/Form-components/ButtonForm";
+import { ProductsService } from "@/services/products/products.service";
+import { SubmitHandler, useForm, useFormState } from "react-hook-form";
+import { TextField } from "@/components/ui/Form-components/TextField";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { MainLayout } from "@/components/layouts/MainLayout";
+import { ChangeEvent, useEffect, useState } from "react";
+import { Back } from "@/components/ui/Back";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 import Image from "next/image";
 import {
     descriptionValidation,
@@ -22,11 +22,11 @@ import {
 import axios from "axios";
 
 const Create = () => {
-    const [drag, setDrag] = useState(false)
+    const [drag, setDrag] = useState(false);
     const [files, setFiles] = useState<string[]>([]);
     const queryClient = useQueryClient();
-    const {back} = useRouter();
-    const {user} = useAuth();
+    const { back } = useRouter();
+    const { user } = useAuth();
     useEffect(() => {
         if (user?.isAdmin === false) {
             back();
@@ -36,14 +36,14 @@ const Create = () => {
     const createProduct = useMutation(
         (newProduct: ICreateProductResponse) =>
             ProductsService.create(newProduct),
-        {onSuccess: () => queryClient.invalidateQueries(["get all products"])}
+        { onSuccess: () => queryClient.invalidateQueries(["get all products"]) }
     );
     // настройка
     const {
         handleSubmit,
         control,
         reset,
-        formState: {isValid}
+        formState: { isValid }
     } = useForm<ICreateProductResponse>({
         defaultValues: {
             type: "",
@@ -62,7 +62,7 @@ const Create = () => {
         });
     }, [files]);
 
-    const {errors} = useFormState({
+    const { errors } = useFormState({
         control
     });
 
@@ -78,7 +78,7 @@ const Create = () => {
                 for (const file of files) {
                     const formData = new FormData();
                     formData.append("images", file);
-                    const {data} = await axios.post(
+                    const { data } = await axios.post(
                         `${process.env.SERVER_URL}upload`,
                         formData
                     );
@@ -93,27 +93,27 @@ const Create = () => {
 
     // eslint-disable-next-line
     const dragStartHandler = (e: any) => {
-        e.preventDefault()
-        setDrag(true)
-    }
+        e.preventDefault();
+        setDrag(true);
+    };
 
     // eslint-disable-next-line
     const dragLeaveHandler = (e: any) => {
-        e.preventDefault()
-        setDrag(false)
-    }
+        e.preventDefault();
+        setDrag(false);
+    };
 
     // eslint-disable-next-line
     const onDrag = async (event: any) => {
-        event.preventDefault()
+        event.preventDefault();
         try {
             if (event.dataTransfer.files) {
-                const files = [...event.dataTransfer.files]
+                const files = [...event.dataTransfer.files];
                 const urls: string[] = [];
                 for (const file of files) {
                     const formData = new FormData();
                     formData.append("images", file);
-                    const {data} = await axios.post(
+                    const { data } = await axios.post(
                         `${process.env.SERVER_URL}upload`,
                         formData
                     );
@@ -124,9 +124,11 @@ const Create = () => {
         } catch (err) {
             toast.error("Ошибка при загрузке файла");
         }
-    }
+    };
 
-    const onSubmit: SubmitHandler<ICreateProductResponse> = async createData => {
+    const onSubmit: SubmitHandler<
+        ICreateProductResponse
+    > = async createData => {
         try {
             if (user) {
                 await createProduct.mutate(createData);
@@ -148,7 +150,7 @@ const Create = () => {
 
     return (
         <MainLayout title={"Создать свой продукт"}>
-            <Back/>
+            <Back />
             <div>
                 <section className="bg-white dark:bg-gray-900">
                     <div className="py-8 px-4 mx-auto max-w-7xl lg:py-16">
@@ -193,19 +195,20 @@ const Create = () => {
                                                     d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                                                 ></path>
                                             </svg>
-                                            {drag
-                                                ? <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                                                <span className="font-semibold">
-                                                    Сюда
-                                                </span>
+                                            {drag ? (
+                                                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                                    <span className="font-semibold">
+                                                        Сюда
+                                                    </span>
                                                 </p>
-                                                : <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                                                <span className="font-semibold">
-                                                    Кликните {" "}
-                                                </span>
+                                            ) : (
+                                                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                                    <span className="font-semibold">
+                                                        Кликните{" "}
+                                                    </span>
                                                     или перетащите
                                                 </p>
-                                            }
+                                            )}
                                             <p className="text-xs text-gray-500 dark:text-gray-400">
                                                 SVG, PNG, JPG or GIF (MAX.
                                                 800x400px)

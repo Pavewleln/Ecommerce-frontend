@@ -10,12 +10,16 @@ import Image from "next/image";
 import { useState } from "react";
 
 export const getStaticProps = async (context: { params: { id: string } }) => {
-    const { data } = await ProductsService.getById(context.params.id);
-    return {
-        props: {
-            data
-        }
-    };
+    try {
+        const { data } = await ProductsService.getById(context.params.id);
+        return {
+            props: {
+                data
+            }
+        };
+    } catch (err) {
+        console.log(err);
+    }
 };
 
 const Product = ({ data }: { data: IProduct }) => {
@@ -123,13 +127,17 @@ const Product = ({ data }: { data: IProduct }) => {
     );
 };
 export const getStaticPaths = async () => {
-    const { data } = await ProductsService.getAll();
-    const paths = data.map(item => ({
-        params: { id: item._id.toString() }
-    }));
-    return {
-        paths,
-        fallback: false
-    };
+    try {
+        const { data } = await ProductsService.getAll();
+        const paths = data.map(item => ({
+            params: { id: item._id.toString() }
+        }));
+        return {
+            paths,
+            fallback: false
+        };
+    } catch (err) {
+        console.log(err);
+    }
 };
 export default Product;
