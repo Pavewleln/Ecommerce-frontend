@@ -1,4 +1,7 @@
-import { ICreateProductResponse } from "@/services/products/products.interface";
+import {
+    ICreateProductResponse,
+    IProduct
+} from "@/services/products/products.interface";
 import { TextareaField } from "@/components/ui/Form-components/TextareaField";
 import { ButtonForm } from "@/components/ui/Form-components/ButtonForm";
 import { ProductsService } from "@/services/products/products.service";
@@ -21,9 +24,22 @@ import {
 } from "@/utils/validation";
 import axios from "axios";
 
-const Create = () => {
+export const getStaticProps = async (context: { params: { id: string } }) => {
+    try {
+        const { data } = await ProductsService.getById(context.params.id);
+        return {
+            props: {
+                data,
+                id: context.params.id
+            }
+        };
+    } catch (err) {
+        console.log(err);
+    }
+};
+const Edit = ({ data, id }: { data: IProduct; id: string }) => {
     const [drag, setDrag] = useState(false);
-    const [files, setFiles] = useState<string[]>([]);
+    const [files, setFiles] = useState<string[]>(data.images);
     const queryClient = useQueryClient();
     const { back } = useRouter();
     const { user } = useAuth();
@@ -34,8 +50,8 @@ const Create = () => {
         }
     }, [user]);
     const createProduct = useMutation(
-        (newProduct: ICreateProductResponse) =>
-            ProductsService.create(newProduct),
+        (product: ICreateProductResponse) =>
+            ProductsService.update({ id, data: product }),
         { onSuccess: () => queryClient.invalidateQueries(["get all products"]) }
     );
     // настройка
@@ -46,11 +62,11 @@ const Create = () => {
         formState: { isValid }
     } = useForm<ICreateProductResponse>({
         defaultValues: {
-            type: "",
-            description: "",
-            price: 0,
-            title: "",
-            kol: 0,
+            type: data.type,
+            description: data.description,
+            price: data.price,
+            title: data.title,
+            kol: data.kol,
             images: files
         },
         mode: "onChange"
@@ -58,6 +74,22 @@ const Create = () => {
 
     useEffect(() => {
         reset({
+            type: data.type,
+            description: data.description,
+            price: data.price,
+            title: data.title,
+            kol: data.kol,
+            images: files
+        });
+        setFiles(data.images);
+    }, [data]);
+    useEffect(() => {
+        reset({
+            type: data.type,
+            description: data.description,
+            price: data.price,
+            title: data.title,
+            kol: data.kol,
             images: files
         });
     }, [files]);
@@ -132,31 +164,21 @@ const Create = () => {
         try {
             if (user) {
                 await createProduct.mutate(createData);
-                toast.success("Продукт успешно создан");
+                toast.success("Продукт успешно изменен");
             }
         } catch (err) {
             toast.error("Ошибка. Попробуйте позже");
-        } finally {
-            setFiles([]);
-            reset({
-                type: "",
-                description: "",
-                price: 0,
-                title: "",
-                kol: 0,
-                images: files
-            });
         }
     };
 
     return (
-        <MainLayout title={"Создать свой продукт"}>
+        <MainLayout title={"Изменить"}>
             <Back />
             <div>
                 <section className="bg-white dark:bg-gray-900">
                     <div className="py-8 px-4 mx-auto max-w-7xl lg:py-16">
                         <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white m-2 text-center">
-                            Создать новый продукт
+                            Изменить продукт
                         </h2>
                         <form
                             onSubmit={handleSubmit(onSubmit)}
@@ -304,7 +326,7 @@ const Create = () => {
                                 </div>
                                 <div className={"w-[100px] m-2"}>
                                     <ButtonForm
-                                        label={"Создать"}
+                                        label={"Изменить"}
                                         isValid={isValid}
                                     />
                                 </div>
@@ -316,4 +338,18 @@ const Create = () => {
         </MainLayout>
     );
 };
-export default Create;
+export const getStaticPaths = async () => {
+    try {
+        const { data } = await ProductsService.getAll();
+        const paths = data.map(item => ({
+            params: { id: item._id.toString() }
+        }));
+        return {
+            paths,
+            fallback: false
+        };
+    } catch (err) {
+        console.log(err);
+    }
+};
+export default Edit;

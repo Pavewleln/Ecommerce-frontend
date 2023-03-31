@@ -1,5 +1,3 @@
-import { useRestrictTyping } from "@/hooks/useRestrictTyping";
-import { classNames } from "@/utils/classNames";
 import { Controller } from "react-hook-form";
 import { FC } from "react";
 
@@ -12,6 +10,8 @@ interface ITextareaField {
     placeholder: string;
     // eslint-disable-next-line
     validation: any;
+    // eslint-disable-next-line
+    error: any;
 }
 
 // Кастомный textarea
@@ -21,9 +21,9 @@ export const TextareaField: FC<ITextareaField> = ({
     label,
     name,
     placeholder,
-    validation
+    validation,
+    error
 }) => {
-    const { handleChangeTextarea, textLimitPercent } = useRestrictTyping(150);
     return (
         <div className={"m-2"}>
             <label
@@ -32,43 +32,26 @@ export const TextareaField: FC<ITextareaField> = ({
             >
                 {label}
             </label>
-            <div className={"text-center"}>
-                <div className={"flex items-center justify-between my-3"}>
-                    <Controller
-                        control={control}
-                        name={name}
-                        rules={validation}
-                        render={({ field }) => (
-                            <textarea
-                                id={id}
-                                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder={placeholder}
-                                required
-                                value={field.value}
-                                onChange={event => {
-                                    handleChangeTextarea(event);
-                                    field.onChange(event);
-                                }}
-                            />
-                        )}
+            <Controller
+                control={control}
+                name={name}
+                rules={validation}
+                render={({ field }) => (
+                    <textarea
+                        id={id}
+                        className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder={placeholder}
+                        required
+                        value={field.value}
+                        onChange={e => field.onChange(e)}
                     />
-                </div>
-                {textLimitPercent > 0 && (
-                    <div className="w-[120px] bg-gray-200 rounded-xl h-1 mb-4 dark:bg-gray-700">
-                        <div
-                            className={classNames(
-                                textLimitPercent < 70
-                                    ? "bg-green-500"
-                                    : textLimitPercent < 90
-                                    ? "bg-orange-500"
-                                    : "bg-red-500",
-                                " h-1 rounded-xl"
-                            )}
-                            style={{ width: textLimitPercent }}
-                        ></div>
-                    </div>
                 )}
-            </div>
+            />
+            {error && (
+                <span className="font-medium px-1 mb-1 text-sm text-red-800 rounded-lg dark:bg-gray-800 dark:text-red-400">
+                    {error.message}
+                </span>
+            )}
         </div>
     );
 };

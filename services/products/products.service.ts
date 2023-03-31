@@ -35,7 +35,7 @@ export const ProductsService = {
             data
         });
     },
-    async update(id: string, data: ICreateProductResponse) {
+    async update({ id, data }: { id: string; data: ICreateProductResponse }) {
         return await instance<IProduct>({
             url: `products/${id}`,
             method: "PATCH",

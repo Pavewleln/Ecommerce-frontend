@@ -1,15 +1,15 @@
-import { AddToBasketButton } from "@/components/ui/Home/Card/AddToBasketButton";
-import { ProductsService } from "@/services/products/products.service";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { IProduct } from "@/services/products/products.interface";
-import { formatPrice } from "@/utils/formatPrice";
-import { classNames } from "@/utils/classNames";
-import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "next/router";
-import { toast } from "react-toastify";
+import {AddToBasketButton} from "@/components/ui/Home/Card/AddToBasketButton";
+import {ProductsService} from "@/services/products/products.service";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
+import {IProduct} from "@/services/products/products.interface";
+import {formatPrice} from "@/utils/formatPrice";
+import {classNames} from "@/utils/classNames";
+import {useAuth} from "@/hooks/useAuth";
+import {useRouter} from "next/router";
+import {toast} from "react-toastify";
+import {FC, MouseEvent} from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { FC, MouseEvent } from "react";
 
 export const Card: FC<{ product: IProduct }> = ({ product }) => {
     const queryClient = useQueryClient();
@@ -36,7 +36,8 @@ export const Card: FC<{ product: IProduct }> = ({ product }) => {
         }
     };
     return (
-        <div className="w-[16.5rem] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-2 hover:shadow-md transition-all">
+        <div className="relative w-[16.5rem] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-2 hover:shadow-md transition-all">
+            {/*<FavoriteButton />*/}
             <Link
                 className={"bg-white dark:bg-white"}
                 href={`/products/${_id}`}
@@ -81,14 +82,24 @@ export const Card: FC<{ product: IProduct }> = ({ product }) => {
                 </div>
                 <div className="flex items-center justify-end">
                     {seller === user?._id && pathname === "/products/my" ? (
-                        <button
-                            onClick={event => onSubmit(event, _id)}
-                            className={
-                                "focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                            }
-                        >
-                            Удалить
-                        </button>
+                        <>
+                            <Link
+                                href={`/products/${_id}/edit`}
+                                className={
+                                    "text-green-700 border-green-700 hover:bg-green-800 focus:ring-green-300 dark:border-green-500 dark:hover:bg-green-500 dark:focus:ring-green-800 hover:text-white border focus:ring-4 focus:outline-none font-medium rounded-lg px-3 py-2 text-xs font-medium text-center dark:text-blue-500 dark:hover:text-white text-center mr-2 mb-2 disabled:cursor-not-allowed disabled:border-blue-100 disabled:text-blue-100"
+                                }
+                            >
+                                Изменить
+                            </Link>
+                            <button
+                                onClick={event => onSubmit(event, _id)}
+                                className={
+                                    "text-red-700 border-red-700 hover:bg-red-800 focus:ring-red-300 dark:border-red-500 dark:hover:bg-red-500 dark:focus:ring-red-800 hover:text-white border focus:ring-4 focus:outline-none font-medium rounded-lg px-3 py-2 text-xs font-medium text-center dark:text-blue-500 dark:hover:text-white text-center mr-2 mb-2 disabled:cursor-not-allowed disabled:border-blue-100 disabled:text-blue-100"
+                                }
+                            >
+                                Удалить
+                            </button>
+                        </>
                     ) : (
                         <AddToBasketButton
                             product={product}
