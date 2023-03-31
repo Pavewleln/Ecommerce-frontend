@@ -55,6 +55,7 @@ module.exports = {
                 tsx: "never"
             }
         ],
+        "prettier/prettier": [2, { useTabs: false }],
         "no-nested-ternary": "off",
         "import/prefer-default-export": "off"
     }
