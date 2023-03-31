@@ -37,7 +37,6 @@ export const Card: FC<{ product: IProduct }> = ({ product }) => {
     };
     return (
         <div className="relative w-[16.5rem] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-2 hover:shadow-md transition-all">
-            {/*<FavoriteButton />*/}
             <Link
                 className={"bg-white dark:bg-white"}
                 href={`/products/${_id}`}
