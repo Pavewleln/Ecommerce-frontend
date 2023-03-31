@@ -68,37 +68,45 @@ export const BasketPopup: FC<IBasketPopup> = ({ showModal, setShowModal }) => {
                                                 quantity,
                                                 _id
                                             }) => (
-                                                <Link
-                                                    href={`/products/${_id}`}
+                                                <div
                                                     key={_id}
                                                     className={
                                                         "m-2 flex items-center"
                                                     }
                                                 >
-                                                    {product.images.length ? (
-                                                        <Image
-                                                            loader={() =>
-                                                                product
-                                                                    .images[0]
-                                                            }
-                                                            src={
-                                                                product
-                                                                    .images[0]
-                                                            }
-                                                            alt={product.title}
-                                                            width={80}
-                                                            height={80}
-                                                            className={"m-2"}
-                                                        />
-                                                    ) : (
-                                                        <div
-                                                            className={
-                                                                "rounded-lg p-2 w-[80px h-[80px] bg-gray-100 flex items-center justify-center filter text-gray-400"
-                                                            }
-                                                        >
-                                                            нет фото
-                                                        </div>
-                                                    )}
+                                                    <Link
+                                                        href={`/products/${_id}`}
+                                                    >
+                                                        {product.images
+                                                            .length ? (
+                                                            <Image
+                                                                loader={() =>
+                                                                    product
+                                                                        .images[0]
+                                                                }
+                                                                src={
+                                                                    product
+                                                                        .images[0]
+                                                                }
+                                                                alt={
+                                                                    product.title
+                                                                }
+                                                                width={80}
+                                                                height={80}
+                                                                className={
+                                                                    "m-2"
+                                                                }
+                                                            />
+                                                        ) : (
+                                                            <div
+                                                                className={
+                                                                    "rounded-lg p-2 w-[80px h-[80px] bg-gray-100 flex items-center justify-center filter text-gray-400"
+                                                                }
+                                                            >
+                                                                нет фото
+                                                            </div>
+                                                        )}
+                                                    </Link>
                                                     <div className={"m-2"}>
                                                         <h5
                                                             className={
@@ -200,7 +208,7 @@ export const BasketPopup: FC<IBasketPopup> = ({ showModal, setShowModal }) => {
                                                             </button>
                                                         </div>
                                                     </div>
-                                                </Link>
+                                                </div>
                                             )
                                         )}
                                     </div>

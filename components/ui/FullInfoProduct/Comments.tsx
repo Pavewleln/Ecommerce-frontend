@@ -4,19 +4,25 @@ import { CommentRating } from "@/components/ui/FullInfoProduct/CommentRating";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { TextareaField } from "@/components/ui/Form-components/TextareaField";
 import { ButtonForm } from "@/components/ui/Form-components/ButtonForm";
+import { SubmitHandler, useForm, useFormState } from "react-hook-form";
 import { CommentsService } from "@/services/comments/comments.service";
 import { Comment } from "@/components/ui/FullInfoProduct/Comment";
 import { descriptionValidation } from "@/utils/validation";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { FC, useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "react-toastify";
 
 export const Comments: FC<{ productId: string }> = ({ productId }) => {
     const [rating, setRating] = useState(5);
-    const { user } = useAuth();
     const queryClient = useQueryClient();
-
+    const { user } = useAuth();
+    const createComment = useMutation(
+        (newComment: ICreateCommentResponse) =>
+            CommentsService.create(newComment),
+        {
+            onSuccess: () => queryClient.invalidateQueries(["get all comments"])
+        }
+    );
     const {
         data: comments,
         isLoading,
@@ -29,16 +35,6 @@ export const Comments: FC<{ productId: string }> = ({ productId }) => {
             staleTime: 12000
         }
     );
-    const createComment = useMutation(
-        (newComment: ICreateCommentResponse) =>
-            CommentsService.create(newComment),
-        {
-            onSuccess: () => queryClient.invalidateQueries(["get all comments"])
-        }
-    );
-    useEffect(() => {
-        refetch();
-    }, [productId]);
 
     const {
         handleSubmit,
@@ -54,6 +50,14 @@ export const Comments: FC<{ productId: string }> = ({ productId }) => {
         },
         mode: "onChange"
     });
+
+    const { errors } = useFormState({
+        control
+    });
+
+    useEffect(() => {
+        refetch();
+    }, [productId]);
 
     useEffect(() => {
         if (user) {
@@ -74,7 +78,7 @@ export const Comments: FC<{ productId: string }> = ({ productId }) => {
         } catch (err) {
             toast.error("Ошибка. Попробуйте позже");
         } finally {
-            setRating(0.5);
+            setRating(5);
         }
     };
     return !isLoading ? (
@@ -86,6 +90,7 @@ export const Comments: FC<{ productId: string }> = ({ productId }) => {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="py-2 px-4 mb-4 bg-white">
                         <TextareaField
+                            error={errors.text}
                             id={"text"}
                             control={control}
                             label={"Отзыв"}
