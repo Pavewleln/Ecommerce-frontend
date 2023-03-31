@@ -1,13 +1,13 @@
-import {AddToBasketButton} from "@/components/ui/Home/Card/AddToBasketButton";
-import {ProductsService} from "@/services/products/products.service";
-import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {IProduct} from "@/services/products/products.interface";
-import {formatPrice} from "@/utils/formatPrice";
-import {classNames} from "@/utils/classNames";
-import {useAuth} from "@/hooks/useAuth";
-import {useRouter} from "next/router";
-import {toast} from "react-toastify";
-import {FC, MouseEvent} from "react";
+import { AddToBasketButton } from "@/components/ui/Home/Card/AddToBasketButton";
+import { ProductsService } from "@/services/products/products.service";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { IProduct } from "@/services/products/products.interface";
+import { formatPrice } from "@/utils/formatPrice";
+import { classNames } from "@/utils/classNames";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+import { FC, MouseEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
