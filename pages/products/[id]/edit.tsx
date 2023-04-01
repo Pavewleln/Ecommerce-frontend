@@ -23,20 +23,6 @@ import {
     typeValidation
 } from "@/utils/validation";
 import axios from "axios";
-
-export const getStaticProps = async (context: { params: { id: string } }) => {
-    try {
-        const { data } = await ProductsService.getById(context.params.id);
-        return {
-            props: {
-                data,
-                id: context.params.id
-            }
-        };
-    } catch (err) {
-        console.log(err);
-    }
-};
 const Edit = ({ data, id }: { data: IProduct; id: string }) => {
     const [drag, setDrag] = useState(false);
     const [files, setFiles] = useState<string[]>(data.images);
@@ -338,15 +324,18 @@ const Edit = ({ data, id }: { data: IProduct; id: string }) => {
         </MainLayout>
     );
 };
-export const getStaticPaths = async () => {
+export const getServerSideProps = async ({
+    query
+}: {
+    query: { id: string };
+}) => {
     try {
-        const { data } = await ProductsService.getAll();
-        const paths = data.map(item => ({
-            params: { id: item._id.toString() }
-        }));
+        const { data } = await ProductsService.getById(query.id);
         return {
-            paths,
-            fallback: false
+            props: {
+                data,
+                id: query.id
+            }
         };
     } catch (err) {
         console.log(err);
