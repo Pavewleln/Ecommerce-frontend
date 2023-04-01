@@ -9,19 +9,6 @@ import { Back } from "@/components/ui/Back";
 import Image from "next/image";
 import { useState } from "react";
 
-export const getStaticProps = async (context: { params: { id: string } }) => {
-    try {
-        const { data } = await ProductsService.getById(context.params.id);
-        return {
-            props: {
-                data
-            }
-        };
-    } catch (err) {
-        console.log(err);
-    }
-};
-
 const Product = ({ data }: { data: IProduct }) => {
     const [tab, setTab] = useState(0);
 
@@ -126,15 +113,15 @@ const Product = ({ data }: { data: IProduct }) => {
         </MainLayout>
     );
 };
-export const getStaticPaths = async () => {
+export const getServerSideProps = async ({
+    query
+}: {
+    query: { id: string };
+}) => {
     try {
-        const { data } = await ProductsService.getAll();
-        const paths = data.map(item => ({
-            params: { id: item._id.toString() }
-        }));
+        const { data } = await ProductsService.getById(query.id);
         return {
-            paths,
-            fallback: false
+            props: { data }
         };
     } catch (err) {
         console.log(err);
